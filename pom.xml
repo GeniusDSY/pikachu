@@ -16,8 +16,8 @@
         <version>2.0.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cn.edu.cqupt</groupId>
-    <artifactId>pikachu</artifactId>
+    <groupId>cn.edu.cqupt.pikachu</groupId>
+    <artifactId>ad</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>pikachu</name>
     <description>Graduation project</description>
@@ -35,10 +35,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

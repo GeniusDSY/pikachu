@@ -3,7 +3,6 @@ package cn.edu.cqupt.pikachu.ad.advice;
 import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
-import cn.edu.cqupt.pikachu.ad.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,7 +28,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler({AdException.class})
     public Response<Object> handlerAdException(HttpServletRequest request, AdException exception) {
         log.error("Request：method = ", request.getMethod(), ". Exception = ", exception);
-        return ResponseUtils.fail(ResultStatus.SYSTEM_ERROR, exception.getMessage());
+        return new Response<>(ResultStatus.SYSTEM_ERROR, exception.getMessage());
     }
 
 }

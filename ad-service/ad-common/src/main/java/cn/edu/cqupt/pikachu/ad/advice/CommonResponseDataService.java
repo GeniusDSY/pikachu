@@ -3,7 +3,6 @@ package cn.edu.cqupt.pikachu.ad.advice;
 import cn.edu.cqupt.pikachu.ad.annotation.IgnoreResponseAdvice;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
-import cn.edu.cqupt.pikachu.ad.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -49,15 +48,15 @@ public class CommonResponseDataService implements ResponseBodyAdvice<Object> {
                                   ServerHttpResponse serverHttpResponse) {
         try {
             if (null == o) {
-                return ResponseUtils.success(ResultStatus.SUCCESS);
+                return new Response<>(ResultStatus.SUCCESS);
             }
             if (o instanceof Response) {
                 return o;
             }
-            return ResponseUtils.success(ResultStatus.SUCCESS, o);
+            return new Response<>(ResultStatus.SUCCESS, o);
         } catch (Exception e) {
             log.error("Response error：", e);
-            return ResponseUtils.fail(ResultStatus.SYSTEM_ERROR);
+            return new Response<>(ResultStatus.SYSTEM_ERROR);
         }
 
     }

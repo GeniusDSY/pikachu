@@ -21,6 +21,35 @@ public enum ResultStatus {
      * 系统异常
      */
     SYSTEM_ERROR("SYSTEM_ERROR", "系统异常"),
+
+    /**
+     * 请求参数错误
+     */
+    REQUEST_PARAM_ERROR("REQUEST_PARAM_ERROR", "请求参数错误"),
+
+    /**
+     * 同名用户已存在
+     */
+    USER_EXISTED("USER_EXISTED", "同名用户已存在"),
+
+    /**
+     * 加密Token异常
+     */
+    ENCRYPT_TOKEN_ERROR("ENCRYPT_TOKEN_ERROR", "加密Token异常"),
+
+    /**
+     * 用户不存在
+     */
+    USER_NOT_EXISTED("USER_NOT_EXISTED", "用户不存在"),
+    /**
+     * 推广计划已存在
+     */
+    PLAN_EXISTED("PLAN_EXISTED", "推广计划已存在"),
+
+    /**
+     * 推广计划不存在
+     */
+    PLAN_NOT_EXIST("PLAN_NOT_EXIST", "推广计划不存在"),
     ;
 
     /**

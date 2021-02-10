@@ -1,6 +1,7 @@
 package cn.edu.cqupt.pikachu.ad.model.vo.response;
 
 import cn.edu.cqupt.pikachu.ad.constants.ResponseConstants;
+import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -33,25 +34,23 @@ public class Response<T> implements Serializable {
     /**
      * 异常响应构造函数
      *
-     * @param code
-     * @param message
+     * @param resultStatus 结果状态码
      */
-    public Response(String code, String message) {
-        this.code = code;
-        this.message = message;
+    public Response(ResultStatus resultStatus) {
+        this.code = resultStatus.getCode();
+        this.message = resultStatus.getDescription();
         this.data = null;
     }
 
     /**
      * 成功响应构造函数
      *
-     * @param code
-     * @param message
+     * @param resultStatus 结果状态码
      * @param data
      */
-    public Response(String code, String message, T data) {
-        this.code = code;
-        this.message = ResponseConstants.EMPTY;
+    public Response(ResultStatus resultStatus, T data) {
+        this.code = resultStatus.getCode();
+        this.message = resultStatus.getDescription();
         this.data = data;
     }
 

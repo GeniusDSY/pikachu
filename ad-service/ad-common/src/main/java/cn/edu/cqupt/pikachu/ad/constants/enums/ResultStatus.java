@@ -49,8 +49,12 @@ public enum ResultStatus {
     /**
      * 推广计划不存在
      */
-    PLAN_NOT_EXIST("PLAN_NOT_EXIST", "推广计划不存在"),
-    ;
+    PLAN_NOT_EXISTED("PLAN_NOT_EXISTED", "推广计划不存在"),
+
+    /**
+     * 推广单元已存在
+     */
+    UNIT_EXISTED("UNIT_EXISTED", "推广单元已存在");
 
     /**
      * 状态码

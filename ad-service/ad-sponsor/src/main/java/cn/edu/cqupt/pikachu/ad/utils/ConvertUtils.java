@@ -1,13 +1,18 @@
 package cn.edu.cqupt.pikachu.ad.utils;
 
+import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanDTO;
+import cn.edu.cqupt.pikachu.ad.model.dto.AdUnitDTO;
+import cn.edu.cqupt.pikachu.ad.model.dto.CreativeDTO;
 import cn.edu.cqupt.pikachu.ad.model.dto.UserDTO;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdPlan;
+import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
+import cn.edu.cqupt.pikachu.ad.model.entity.Creative;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.AdUnitVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.UserVO;
-import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,18 +77,62 @@ public class ConvertUtils {
     public static AdPlanVO adPlan2AdPlanVO(AdPlan adPlan) {
         return new AdPlanVO(adPlan.getId(), adPlan.getPlanName());
     }
+
     /**
-     * Entity AdPlan 转换成 AdPlanVO
+     * Entity AdPlan 批量转换成 AdPlanVO
      *
-     * @param adPlan Entity AdPlan
+     * @param adPlans Entity AdPlan
      * @return AdPlan展示数据
      */
     public static List<AdPlanVO> adPlan2AdPlanVO(List<AdPlan> adPlans) {
-        
-        return adPlans.stream(adPlan -> {
-            new AdPlanVO(adPlan.getId(), adPlan.getPlanName());
-        }).collect(Collectors.toList());
+
+        return adPlans.stream().map(adPlan ->
+                new AdPlanVO(adPlan.getId(), adPlan.getPlanName()))
+                .collect(Collectors.toList());
     }
 
+
+    /**
+     * AdUnitDTO 转换成 AdUnit
+     *
+     * @param adUnitDTO 请求传入数据
+     * @return Entity AdUnit
+     */
+    public static AdUnit adUnitDTO2AdUnit(AdUnitDTO adUnitDTO) {
+
+        return new AdUnit(adUnitDTO.getPlanId(), adUnitDTO.getUnitName(),
+                adUnitDTO.getPositionType(), adUnitDTO.getBudget());
+    }
+
+    /**
+     * Entity AdUnit 转换成 AdUnitVO
+     *
+     * @param adUnit 广告单元Entity数据
+     * @return 广告单元展示数据AdUnitVO
+     */
+    public static AdUnitVO adUnit2AdUnitVO(AdUnit adUnit) {
+
+        return new AdUnitVO(adUnit.getId(), adUnit.getUnitName());
+    }
+
+    /**
+     * 传入创意 CreativeDTO 转换成 Entity Creative
+     *
+     * @param creativeDTO 创意传入数据
+     * @return Entity 创意数据
+     */
+    public static Creative creativeDTO2Creative(CreativeDTO creativeDTO) {
+        Creative creative = new Creative();
+        creative.setName(creativeDTO.getName());
+        creative.setType(creativeDTO.getType());
+        creative.setMaterialType(creativeDTO.getMaterialType());
+        creative.setHeight(creativeDTO.getHeight());
+        creative.setWidth(creativeDTO.getWidth());
+        creative.setSize(creativeDTO.getSize());
+        creative.setDuration(creativeDTO.getDuration());
+        creative.setAuditStatus(CommonStatus.VALID.getStatus());
+        creative.setUserId(creativeDTO.getUserId());
+        return creative;
+    }
 
 }

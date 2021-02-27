@@ -2,12 +2,12 @@
 server:
   port: 8080
   servlet:
-    context-path: /pikachu
+    context-path: /ad-sponsor
 
 # Spring相关配置
 spring:
   application:
-    name: pikachu
+    name: eureka-client-ad-sponsor
   jpa:
     show-sql: true
     hibernate:
@@ -31,4 +31,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://server1:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/

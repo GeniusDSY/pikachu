@@ -1,13 +1,10 @@
 package cn.edu.cqupt.pikachu.ad;
 
-import cn.edu.cqupt.pikachu.ad.dao.AdUserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-
-import javax.annotation.Resource;
 
 /**
  * @author :DengSiYuan

@@ -34,7 +34,7 @@ public class UserController {
      */
     @PostMapping("create")
     public UserVO createUser(UserDTO userDTO) throws AdException {
-        log.info("UserController#createUser userDTO -> {}", JSON.toJSONString(userDTO));
+        log.info("ad-sponsor: UserController#createUser userDTO -> {}", JSON.toJSONString(userDTO));
         return userService.createUser(userDTO);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
      */
     @PostMapping("update")
     public UserVO updateUser(UserDTO userDTO) throws AdException {
-        log.info("UserController#updateUser userDTO -> {}", JSON.toJSONString(userDTO));
+        log.info("ad-sponsor: UserController#updateUser userDTO -> {}", JSON.toJSONString(userDTO));
         return userService.updateUser(userDTO);
     }
 

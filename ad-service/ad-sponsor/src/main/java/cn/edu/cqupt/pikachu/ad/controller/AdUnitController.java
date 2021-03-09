@@ -27,31 +27,31 @@ public class AdUnitController {
 
     @PostMapping("create/unit")
     public AdUnitVO createUnit(AdUnitDTO adUnitDTO) throws AdException{
-        log.info("AdUnitController createUnit -> {}", JSON.toJSONString(adUnitDTO));
+        log.info("ad-sponsor: AdUnitController createUnit -> {}", JSON.toJSONString(adUnitDTO));
         return adUnitService.createUnit(adUnitDTO);
     }
 
     @PostMapping("create/unitKeyword")
     public AdUnitKeywordVO createUnitKeyword(AdUnitKeywordDTO adUnitKeywordDTO) throws AdException {
-        log.info("AdUnitController createUnitKeyword -> {}", JSON.toJSONString(adUnitKeywordDTO));
+        log.info("ad-sponsor: AdUnitController createUnitKeyword -> {}", JSON.toJSONString(adUnitKeywordDTO));
         return adUnitService.createUnitKeyword(adUnitKeywordDTO);
     }
 
     @PostMapping("create/unitIt")
     public AdUnitItVO createUnitIt(AdUnitItDTO adUnitItDTO) throws AdException {
-        log.info("AdUnitController createUnitIt -> {}", JSON.toJSONString(adUnitItDTO));
+        log.info("ad-sponsor: AdUnitController createUnitIt -> {}", JSON.toJSONString(adUnitItDTO));
         return adUnitService.createUnitIt(adUnitItDTO);
     }
 
     @PostMapping("create/unitDistrict")
     public AdUnitDistrictVO createUnitDistrict(AdUnitDistrictDTO adUnitDistrictDTO) throws AdException {
-        log.info("AdUnitController createUnitDistrict -> {}", JSON.toJSONString(adUnitDistrictDTO));
+        log.info("ad-sponsor: AdUnitController createUnitDistrict -> {}", JSON.toJSONString(adUnitDistrictDTO));
         return adUnitService.createUnitDistrict(adUnitDistrictDTO);
     }
 
     @PostMapping("create/creativeUnit")
     public CreativeUnitVO createCreativeUnit(CreativeUnitDTO creativeUnitDTO) throws AdException {
-        log.info("AdUnitController createCreativeUnit -> {}", JSON.toJSONString(creativeUnitDTO));
+        log.info("ad-sponsor: AdUnitController createCreativeUnit -> {}", JSON.toJSONString(creativeUnitDTO));
         return adUnitService.createCreativeUnit(creativeUnitDTO);
     }
 

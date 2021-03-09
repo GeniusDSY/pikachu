@@ -27,25 +27,25 @@ public class AdPlanController {
 
     @PostMapping("create")
     public AdPlanVO createAdPlan(AdPlanDTO adPlanDTO) throws AdException {
-        log.info("AdPlanController createAdPlan -> {}", JSON.toJSONString(adPlanDTO));
+        log.info("ad-sponsor: AdPlanController createAdPlan -> {}", JSON.toJSONString(adPlanDTO));
         return adPlanService.createAdPlan(adPlanDTO);
     }
 
     @PostMapping("get")
     public List<AdPlanVO> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO) throws AdException {
-        log.info("AdPlanController getAdPlanByIds -> {}", JSON.toJSONString(adPlanGetDTO));
+        log.info("ad-sponsor: AdPlanController getAdPlanByIds -> {}", JSON.toJSONString(adPlanGetDTO));
         return adPlanService.getAdPlanByIds(adPlanGetDTO);
     }
 
     @PutMapping("update")
     public AdPlanVO updateAdPlan(AdPlanDTO adPlanDTO) throws AdException {
-        log.info("AdPlanController updateAdPlan -> {}", JSON.toJSONString(adPlanDTO));
+        log.info("ad-sponsor: AdPlanController updateAdPlan -> {}", JSON.toJSONString(adPlanDTO));
         return adPlanService.updateAdPlan(adPlanDTO);
     }
 
     @DeleteMapping("delete")
     public void deleteAdPlan(AdPlanDTO adPlanDTO) throws AdException {
-        log.info("AdPlanController deleteAdPlan -> {}", JSON.toJSONString(adPlanDTO));
+        log.info("ad-sponsor: AdPlanController deleteAdPlan -> {}", JSON.toJSONString(adPlanDTO));
         adPlanService.deleteAdPlan(adPlanDTO);
     }
 

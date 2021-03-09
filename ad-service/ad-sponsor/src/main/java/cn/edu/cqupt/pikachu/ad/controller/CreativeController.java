@@ -27,7 +27,7 @@ public class CreativeController {
 
     @PostMapping("create")
     public CreativeVO createCreative(CreativeDTO creativeDTO) throws AdException {
-        log.info("CreativeController createCreative -> {}", JSON.toJSONString(creativeDTO));
+        log.info("ad-sponsor: CreativeController createCreative -> {}", JSON.toJSONString(creativeDTO));
         return creativeService.createCreative(creativeDTO);
     }
 

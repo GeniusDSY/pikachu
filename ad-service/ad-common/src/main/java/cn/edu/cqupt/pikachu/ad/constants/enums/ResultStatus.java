@@ -54,7 +54,12 @@ public enum ResultStatus {
     /**
      * 推广单元已存在
      */
-    UNIT_EXISTED("UNIT_EXISTED", "推广单元已存在");
+    UNIT_EXISTED("UNIT_EXISTED", "推广单元已存在"),
+
+    /**
+     * 投放系统异常
+     */
+    SPONSOR_ERROR("SPONSOR_ERROR", "投放系统异常");
 
     /**
      * 状态码

@@ -1,6 +1,5 @@
 package cn.edu.cqupt.pikachu.ad.model.vo.response;
 
-import cn.edu.cqupt.pikachu.ad.constants.ResponseConstants;
 import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
 import lombok.Data;
 

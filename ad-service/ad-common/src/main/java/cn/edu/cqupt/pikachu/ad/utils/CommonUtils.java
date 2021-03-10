@@ -6,6 +6,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author :DengSiYuan
@@ -23,6 +25,13 @@ public class CommonUtils {
             "yyyy.MM.dd"
     };
 
+    /**
+     * Md5加密处理
+     *
+     * @param value 需要加密的数据
+     * @return 加密结果
+     * @throws AdException 广告系统异常
+     */
     public static String md5Encrypt(String value) throws AdException {
         if (null == value) {
             throw new AdException(ResultStatus.ENCRYPT_TOKEN_ERROR);
@@ -37,7 +46,7 @@ public class CommonUtils {
      * @return Date
      * @throws AdException 广告系统异常
      */
-    public static Date parseString2Date(String value) throws AdException{
+    public static Date parseString2Date(String value) throws AdException {
         try {
             return DateUtils.parseDate(value, parsePatterns);
         } catch (Exception e) {
@@ -45,4 +54,17 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * 如果要获取的Key不存在，则通过工厂生成一个新的对象
+     *
+     * @param key     键
+     * @param map     KV map
+     * @param factory 对象工厂
+     * @param <K>     键
+     * @param <V>     值
+     * @return
+     */
+    public static <K, V> V getorCreate(K key, Map<K, V> map, Supplier<V> factory) {
+        return map.computeIfAbsent(key, k -> factory.get());
+    }
 }

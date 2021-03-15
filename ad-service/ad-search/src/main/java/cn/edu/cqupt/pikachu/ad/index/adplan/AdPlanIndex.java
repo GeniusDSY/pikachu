@@ -44,7 +44,7 @@ public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
      */
     @Override
     public void add(Long key, AdPlanObject value) {
-        log.info("AdPlanIndex add -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdPlanIndex add -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         objectMap.put(key, value);
     }
 
@@ -56,7 +56,7 @@ public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
      */
     @Override
     public void update(Long key, AdPlanObject value) {
-        log.info("AdPlanIndex update -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdPlanIndex before update -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         AdPlanObject oldObject = objectMap.get(key);
         if (null == oldObject) {
             objectMap.put(key, value);
@@ -64,7 +64,7 @@ public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
             oldObject.update(value);
         }
 
-        log.info("AdPlanIndex update -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdPlanIndex after update -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
     }
 
     /**
@@ -76,7 +76,7 @@ public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
     @Override
     public void delete(Long key, AdPlanObject value) {
 
-        log.info("AdPlanIndex delete -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdPlanIndex delete -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         objectMap.remove(key);
     }
 }

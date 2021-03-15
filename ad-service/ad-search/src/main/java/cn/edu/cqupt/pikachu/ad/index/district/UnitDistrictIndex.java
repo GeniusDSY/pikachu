@@ -61,9 +61,8 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
             districts.add(key);
         }
 
-        log.info("UnitDistrictIndex add -> key:{}, value:{}", key, value,
-                "districtUnitMap:{}", districtUnitMap,
-                "unitDistrictMap:{}", unitDistrictMap);
+        log.info("UnitDistrictIndex add -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
+                key, value, districtUnitMap, unitDistrictMap);
     }
 
     /**
@@ -96,8 +95,7 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
             districts.remove(key);
         }
 
-        log.info("UnitDistrictIndex delete -> key:{}, value:{}", key, value,
-                "districtUnitMap:{}", districtUnitMap,
-                "unitDistrictMap:{}", unitDistrictMap);
+        log.info("UnitDistrictIndex delete -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
+                key, value, districtUnitMap, unitDistrictMap);
     }
 }

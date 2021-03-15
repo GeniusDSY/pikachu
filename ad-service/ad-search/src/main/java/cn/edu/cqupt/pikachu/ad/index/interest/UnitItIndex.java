@@ -64,9 +64,7 @@ public class UnitItIndex implements IndexAware<String, Set<Long>> {
             its.add(key);
         }
 
-        log.info("UnitItIndex add -> key:{}, value:{}", key, value,
-                "itUnitMap:{}", itUnitMap,
-                "unitItMap:{}", unitItMap);
+        log.info("UnitItIndex add -> key:{}, value:{}, itUnitMap:{}, unitItMap:{}", key, value, itUnitMap, unitItMap);
 
     }
 
@@ -80,7 +78,7 @@ public class UnitItIndex implements IndexAware<String, Set<Long>> {
     public void update(String key, Set<Long> value) {
 
         log.error("UnitItIndex update -> {}",
-                "keyword index cannot support update,You can do this by deleting it first and adding it later");
+                "unitIt index cannot support update,You can do this by deleting it first and adding it later");
     }
 
     /**
@@ -100,9 +98,7 @@ public class UnitItIndex implements IndexAware<String, Set<Long>> {
             ItTagSet.remove(key);
         }
 
-        log.info("UnitItIndex delete -> key:{}, value:{}", key, value,
-                "itUnitMap:{}", itUnitMap,
-                "unitItMap:{}", unitItMap);
+        log.info("UnitItIndex delete -> key:{}, value:{}, itUnitMap:{}, unitItMap:{}", key, value, itUnitMap, unitItMap);
     }
 
     public boolean match(Long unitId, List<String> itTags) {

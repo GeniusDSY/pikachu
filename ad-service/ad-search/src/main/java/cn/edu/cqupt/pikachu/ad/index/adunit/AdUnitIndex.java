@@ -44,7 +44,7 @@ public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
      */
     @Override
     public void add(Long key, AdUnitObject value) {
-        log.info("AdUnitIndex add -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdUnitIndex add -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         objectMap.put(key, value);
     }
 
@@ -56,7 +56,7 @@ public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
      */
     @Override
     public void update(Long key, AdUnitObject value) {
-        log.info("AdUnitIndex update -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdUnitIndex before update -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         AdUnitObject oldObject = objectMap.get(key);
         if (null == oldObject) {
             objectMap.put(key, value);
@@ -64,7 +64,7 @@ public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
             oldObject.update(value);
         }
 
-        log.info("AdUnitIndex update -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdUnitIndex after update -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
     }
 
     /**
@@ -76,7 +76,7 @@ public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
     @Override
     public void delete(Long key, AdUnitObject value) {
 
-        log.info("AdUnitIndex delete -> key:{}, value:{}", key, value, "indexMap:{}", objectMap);
+        log.info("AdUnitIndex delete -> key:{}, value:{}, indexMap:{}", key, value, objectMap);
         objectMap.remove(key);
     }
 }

@@ -68,10 +68,6 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
     @Override
     public void add(String key, Set<Long> value) {
 
-        log.info("UnitKeywordIndex add -> key:{}, value:{}", key, value,
-                "keywordUnitMap:{}", keywordUnitMap,
-                "unitKeywordMap:{}", unitKeywordMap);
-
         Set<Long> unitIdSet = CommonUtils.getorCreate(key, keywordUnitMap, ConcurrentSkipListSet::new);
         unitIdSet.addAll(value);
 
@@ -79,6 +75,9 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
             Set<String> keywordSet = CommonUtils.getorCreate(unitId, unitKeywordMap, ConcurrentSkipListSet::new);
             keywordSet.add(key);
         }
+
+        log.info("UnitKeywordIndex add -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
+                key, value, keywordUnitMap, unitKeywordMap);
     }
 
     /**
@@ -90,7 +89,7 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
     @Override
     public void update(String key, Set<Long> value) {
         log.error("UnitKeywordIndex update -> {}",
-                "keyword index cannot support update,You can do this by deleting it first and adding it later");
+                "unitKeyword index cannot support update,You can do this by deleting it first and adding it later");
     }
 
     /**
@@ -102,10 +101,6 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
     @Override
     public void delete(String key, Set<Long> value) {
 
-        log.info("UnitKeywordIndex delete -> key:{}", key, "value:{}", value,
-                "keywordUnitMap:{}", keywordUnitMap,
-                "unitKeywordMap:{}", unitKeywordMap);
-
         Set<Long> unitIds = CommonUtils.getorCreate(key, keywordUnitMap, ConcurrentSkipListSet::new);
         unitIds.removeAll(value);
 
@@ -113,6 +108,9 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
             Set<String> keywordSet = CommonUtils.getorCreate(unitId, unitKeywordMap, ConcurrentSkipListSet::new);
             keywordSet.remove(key);
         }
+
+        log.info("UnitKeywordIndex delete -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
+                key, value, keywordUnitMap, unitKeywordMap);
     }
 
     /**

@@ -13,13 +13,17 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <ad-common.version>0.0.1-SNAPSHOT</ad-common.version>
+    </properties>
+
     <dependencies>
 
         <!-- 引用公共模块 -->
         <dependency>
             <groupId>cn.edu.cqupt.pikachu</groupId>
             <artifactId>ad-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${ad-common.version}</version>
         </dependency>
 
 

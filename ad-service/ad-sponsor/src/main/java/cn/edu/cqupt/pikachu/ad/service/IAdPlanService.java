@@ -4,7 +4,6 @@ import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanDTO;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanGetDTO;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
-import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 
 import java.util.List;
 

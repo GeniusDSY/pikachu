@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <ad-common.version>0.0.1.SNAPSHOT</ad-common.version>
+        <ad-common.version>0.0.1-SNAPSHOT</ad-common.version>
         <mysql-binlog-connector-java.version>0.13.0</mysql-binlog-connector-java.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <spring-kafka.version>2.1.5.RELEASE</spring-kafka.version>

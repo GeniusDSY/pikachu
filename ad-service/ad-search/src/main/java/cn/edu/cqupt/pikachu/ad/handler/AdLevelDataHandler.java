@@ -124,7 +124,7 @@ public class AdLevelDataHandler {
      * @param districtTable 地域数据表
      * @param type          操作类型
      */
-    public static void handlevel4(AdUnitDistrictTable districtTable, OpType type) {
+    public static void handlelevel4(AdUnitDistrictTable districtTable, OpType type) {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(districtTable.getUnitId());
         if (null == unitObject) {

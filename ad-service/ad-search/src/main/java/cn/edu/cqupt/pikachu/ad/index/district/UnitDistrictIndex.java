@@ -1,14 +1,18 @@
 package cn.edu.cqupt.pikachu.ad.index.district;
 
 import cn.edu.cqupt.pikachu.ad.index.IndexAware;
+import cn.edu.cqupt.pikachu.ad.search.vo.feature.DistrictFeature;
 import cn.edu.cqupt.pikachu.ad.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 /**
  * @author :DengSiYuan
@@ -61,7 +65,7 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
             districts.add(key);
         }
 
-        log.info("UnitDistrictIndex add -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
+        log.info("ad-search:UnitDistrictIndex add -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
                 key, value, districtUnitMap, unitDistrictMap);
     }
 
@@ -74,7 +78,7 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
     @Override
     public void update(String key, Set<Long> value) {
 
-        log.error("UnitDistrictIndex update -> {}",
+        log.error("ad-search:UnitDistrictIndex update -> {}",
                 "keyword index cannot support update,You can do this by deleting it first and adding it later");
     }
 
@@ -95,7 +99,30 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
             districts.remove(key);
         }
 
-        log.info("UnitDistrictIndex delete -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
+        log.info("ad-search:UnitDistrictIndex delete -> key:{}, value:{}, districtUnitMap:{}, unitDistrictMap:{}",
                 key, value, districtUnitMap, unitDistrictMap);
+    }
+
+    /**
+     * 判断是否匹配地域限制
+     *
+     * @param adUnitId  广告单元Id
+     * @param districts 地域限制
+     * @return 匹配结果
+     */
+    public boolean match(Long adUnitId, List<DistrictFeature.ProvinceAndCity> districts) {
+
+        if (unitDistrictMap.containsKey(adUnitId) && CollectionUtils.isNotEmpty(unitDistrictMap.get(adUnitId))) {
+
+            Set<String> unitDistricts = unitDistrictMap.get(adUnitId);
+
+            List<String> targetDistricts = districts.stream()
+                    .map(d -> CommonUtils.stringConcat(d.getProvince(), d.getCity()))
+                    .collect(Collectors.toList());
+
+            return CollectionUtils.isSubCollection(targetDistricts, unitDistricts);
+        }
+
+        return false;
     }
 }

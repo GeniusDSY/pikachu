@@ -76,7 +76,7 @@ public class AdLevelDataHandler {
 
         AdPlanObject adPlanObject = DataTable.of(AdPlanIndex.class).get(unitTable.getPlanId());
         if (null == adPlanObject) {
-            log.error("AdLevelDataHandler handleLevel3 found AdUnitTable index error -> planId={}",
+            log.error("ad-search:AdLevelDataHandler handleLevel3 found AdUnitTable index error -> planId={}",
                     unitTable.getPlanId());
             return;
         }
@@ -103,7 +103,7 @@ public class AdLevelDataHandler {
         CreativeObject creativeObject = DataTable.of(CreativeIndex.class).get(creativeUnitTable.getAdId());
 
         if (null == unitObject || null == creativeObject) {
-            log.error("AdLevelDataHandler handleLevel3 found AdCreativeUnitTable index error -> {}",
+            log.error("ad-search:AdLevelDataHandler handleLevel3 found AdCreativeUnitTable index error -> {}",
                     JSON.toJSONString(creativeUnitTable));
             return;
         }
@@ -128,7 +128,7 @@ public class AdLevelDataHandler {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(districtTable.getUnitId());
         if (null == unitObject) {
-            log.error("AdLevelDataHandler handleLevel4 found AdUnitDistrictTable index error -> unitId={}",
+            log.error("ad-search:AdLevelDataHandler handleLevel4 found AdUnitDistrictTable index error -> unitId={}",
                     districtTable.getUnitId());
         }
 
@@ -147,7 +147,7 @@ public class AdLevelDataHandler {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(itTable.getUnitId());
         if (null == unitObject) {
-            log.error("AdLevelDataHandler handleLevel4 found AdUnitItTable index error -> unitId={}",
+            log.error("ad-search:AdLevelDataHandler handleLevel4 found AdUnitItTable index error -> unitId={}",
                     itTable.getUnitId());
         }
 
@@ -165,7 +165,7 @@ public class AdLevelDataHandler {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(keywordTable.getUnitId());
         if (null == unitObject) {
-            log.error("AdLevelDataHandler handleLevel4 found AdKeywordTable index error -> unitId={}",
+            log.error("ad-search:AdLevelDataHandler handleLevel4 found AdKeywordTable index error -> unitId={}",
                     keywordTable.getUnitId());
         }
 

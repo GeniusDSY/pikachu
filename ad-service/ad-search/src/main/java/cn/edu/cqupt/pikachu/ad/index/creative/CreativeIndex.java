@@ -2,9 +2,10 @@ package cn.edu.cqupt.pikachu.ad.index.creative;
 
 import cn.edu.cqupt.pikachu.ad.index.IndexAware;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,6 +24,33 @@ public class CreativeIndex implements IndexAware<Long, CreativeObject> {
 
     static {
         creativeObjectMap = new ConcurrentHashMap<>();
+    }
+
+    /**
+     * 获取广告Id所关联的创意对象
+     *
+     * @param adIds 广告Id列表
+     * @return 创意对象列表
+     */
+    public List<CreativeObject> fetch(Collection<Long> adIds) {
+
+        if (CollectionUtils.isEmpty(adIds)) {
+            return Collections.emptyList();
+        }
+
+        List<CreativeObject> result = new ArrayList<>();
+
+        adIds.forEach(u -> {
+            CreativeObject object = get(u);
+            if (null == object) {
+                log.error("ad-search:CreativeIndex fetch -> creativeObject not found: {}", u);
+                return;
+            }
+
+            result.add(object);
+        });
+
+        return result;
     }
 
     /**
@@ -46,7 +74,7 @@ public class CreativeIndex implements IndexAware<Long, CreativeObject> {
     public void add(Long key, CreativeObject value) {
 
         creativeObjectMap.put(key, value);
-        log.info("CreativeIndex add -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
+        log.info("ad-search:CreativeIndex add -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
 
     }
 
@@ -59,7 +87,7 @@ public class CreativeIndex implements IndexAware<Long, CreativeObject> {
     @Override
     public void update(Long key, CreativeObject value) {
 
-        log.info("CreativeIndex before update -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
+        log.info("ad-search:CreativeIndex before update -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
         CreativeObject oldObject = creativeObjectMap.get(key);
         if (null == oldObject) {
             creativeObjectMap.put(key, value);
@@ -67,7 +95,7 @@ public class CreativeIndex implements IndexAware<Long, CreativeObject> {
             oldObject.update(value);
         }
 
-        log.info("CreativeIndex after update -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
+        log.info("ad-search:CreativeIndex after update -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
 
     }
 
@@ -80,6 +108,6 @@ public class CreativeIndex implements IndexAware<Long, CreativeObject> {
     @Override
     public void delete(Long key, CreativeObject value) {
         creativeObjectMap.remove(key);
-        log.info("CreativeIndex remove -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
+        log.info("ad-search:CreativeIndex remove -> key:{}, value:{}, creativeObjectMap:{}", key, value, creativeObjectMap);
     }
 }

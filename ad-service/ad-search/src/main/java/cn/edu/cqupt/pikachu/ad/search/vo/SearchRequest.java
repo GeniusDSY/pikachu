@@ -42,7 +42,7 @@ public class SearchRequest {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    private static class RequestInfo{
+    public static class RequestInfo{
 
         /**
          * 请求Id

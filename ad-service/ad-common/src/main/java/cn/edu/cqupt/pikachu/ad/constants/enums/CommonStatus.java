@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * @author :DengSiYuan
  * @date :2021/1/30 22:40
- * @desc :
+ * @desc : 公用状态信息
  */
 @Getter
 @AllArgsConstructor

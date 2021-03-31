@@ -1,12 +1,12 @@
 package cn.edu.cqupt.pikachu.ad.index.creativeunit;
 
 import cn.edu.cqupt.pikachu.ad.index.IndexAware;
+import cn.edu.cqupt.pikachu.ad.index.adunit.AdUnitObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -22,7 +22,7 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
     /**
      * 创意单元对象缓存{adId-unitId, CreativeUnitObject}
      */
-    private static Map<String,CreativeUnitObject> creativeUnitObjectMap;
+    private static Map<String, CreativeUnitObject> creativeUnitObjectMap;
 
     /**
      * 创意单元Id缓存{adId, Set<unitId>}
@@ -76,7 +76,7 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
         }
         creativeSet.add(value.getAdId());
 
-        log.info("CreativeUnitIndex add -> key:{}, value:{}, creativeUnitObjectMap:{}", key, value, creativeUnitIdsMap);
+        log.info("ad-search:CreativeUnitIndex add -> key:{}, value:{}, creativeUnitObjectMap:{}", key, value, creativeUnitIdsMap);
 
     }
 
@@ -88,7 +88,7 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
      */
     @Override
     public void update(String key, CreativeUnitObject value) {
-        log.error("CreativeUnitIndex update -> {}",
+        log.error("ad-search:CreativeUnitIndex update -> {}",
                 "creativeUnit index cannot support update,You can do this by deleting it first and adding it later");
     }
 
@@ -96,7 +96,7 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
      * 删除索引
      *
      * @param key   索引的键
-     * @param value
+     * @param value 索引的值
      */
     @Override
     public void delete(String key, CreativeUnitObject value) {
@@ -113,7 +113,33 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
             creativeSet.remove(value.getAdId());
         }
 
-        log.info("CreativeUnitIndex delete -> key:{}, value:{}, creativeUnitObjectMap:{}", creativeUnitObjectMap);
+        log.info("ad-search:CreativeUnitIndex delete -> key:{}, value:{}, creativeUnitObjectMap:{}", creativeUnitObjectMap);
 
+    }
+
+    /**
+     * 选择广告
+     *
+     * @param unitObjects 广告单元数据对象
+     * @return 符合创意的广告单元id列表
+     */
+    public List<Long> selectAds(List<AdUnitObject> unitObjects) {
+
+        if (CollectionUtils.isEmpty(unitObjects)) {
+            return Collections.emptyList();
+        }
+
+        List<Long> result = new ArrayList<>();
+
+        for (AdUnitObject unitObject : unitObjects) {
+
+            Set<Long> adIds = unitCreativeIdsMap.get(unitObject.getUnitId());
+            if (CollectionUtils.isNotEmpty(adIds)) {
+
+                result.addAll(adIds);
+            }
+        }
+
+        return result;
     }
 }

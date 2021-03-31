@@ -82,7 +82,7 @@ public class DumpDataService {
                 writer.newLine();
             }
         } catch (IOException e) {
-            log.error("DumpDataService dumpAdPlanTable error -> {}", e.fillInStackTrace());
+            log.error("ad-exprot:DumpDataService dumpAdPlanTable error -> {}", e.fillInStackTrace());
         }
     }
 
@@ -110,7 +110,7 @@ public class DumpDataService {
                 writer.newLine();
             }
         } catch (IOException e) {
-            log.error("DumpDataService dumpAdUnitTable error -> {}", e.fillInStackTrace());
+            log.error("ad-export:DumpDataService dumpAdUnitTable error -> {}", e.fillInStackTrace());
         }
     }
 
@@ -139,7 +139,7 @@ public class DumpDataService {
                 writer.newLine();
             }
         } catch (IOException e) {
-            log.error("DumpDataService dumpAdCreativeTable error -> {}", e.fillInStackTrace());
+            log.error("ad-export:DumpDataService dumpAdCreativeTable error -> {}", e.fillInStackTrace());
         }
     }
 

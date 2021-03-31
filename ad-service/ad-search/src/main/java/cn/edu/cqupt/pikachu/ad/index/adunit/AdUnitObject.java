@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author :DengSiYuan
  * @date :2021/3/9 21:05
- * @desc :
+ * @desc : 广告单元对象
  */
 @Data
 @NoArgsConstructor
@@ -67,6 +67,81 @@ public class AdUnitObject {
             this.adPlanObject = newObject.getAdPlanObject();
         }
 
+    }
+
+    /**
+     * 是否开屏
+     *
+     * @param positionType 流量类型
+     * @return true/false
+     */
+    private static boolean isKaiPing(int positionType) {
+        return (positionType & AdUnitConstants.POSITION_TYPE.KAIPING) > 0;
+    }
+
+    /**
+     * 是否贴片
+     *
+     * @param positionType 流量类型
+     * @return true/false
+     */
+    private static boolean isTiePian(int positionType) {
+        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN) > 0;
+    }
+
+    /**
+     * 是否中部贴片
+     *
+     * @param positionType 流量类型
+     * @return true/false
+     */
+    private static boolean isTiePianMiddle(int positionType) {
+        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_MIDDLE) > 0;
+    }
+
+    /**
+     * 是否暂停贴片
+     *
+     * @param positionType 流量类型
+     * @return true/false
+     */
+    private static boolean isTiePianPause(int positionType) {
+        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_PAUSE) > 0;
+    }
+
+    /**
+     * 是否结尾贴片
+     *
+     * @param positionType 流量类型
+     * @return true/false
+     */
+    private static boolean isTiePianPost(int positionType) {
+        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_POST) > 0;
+    }
+
+    /**
+     * 判单广告位种类是否喝流量类型匹配
+     *
+     * @param adSlotType   广告位种类
+     * @param positionType 流量信息
+     * @return 是否匹配
+     */
+    public static boolean isAdSlotTypeOk(int adSlotType, int positionType) {
+
+        switch (adSlotType) {
+            case AdUnitConstants.POSITION_TYPE.KAIPING:
+                return isKaiPing(positionType);
+            case AdUnitConstants.POSITION_TYPE.TIEPIAN:
+                return isTiePian(positionType);
+            case AdUnitConstants.POSITION_TYPE.TIEPIAN_MIDDLE:
+                return isTiePianMiddle(positionType);
+            case AdUnitConstants.POSITION_TYPE.TIEPIAN_PAUSE:
+                return isTiePianPause(positionType);
+            case AdUnitConstants.POSITION_TYPE.TIEPIAN_POST:
+                return isTiePianPost(positionType);
+            default:
+                return false;
+        }
     }
 
 }

@@ -76,7 +76,7 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
             keywordSet.add(key);
         }
 
-        log.info("UnitKeywordIndex add -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
+        log.info("ad-search:UnitKeywordIndex add -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
                 key, value, keywordUnitMap, unitKeywordMap);
     }
 
@@ -88,7 +88,7 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
      */
     @Override
     public void update(String key, Set<Long> value) {
-        log.error("UnitKeywordIndex update -> {}",
+        log.error("ad-search:UnitKeywordIndex update -> {}",
                 "unitKeyword index cannot support update,You can do this by deleting it first and adding it later");
     }
 
@@ -109,7 +109,7 @@ public class UnitKeywordIndex implements IndexAware<String, Set<Long>> {
             keywordSet.remove(key);
         }
 
-        log.info("UnitKeywordIndex delete -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
+        log.info("ad-search:UnitKeywordIndex delete -> key:{}, value:{}, keywordUnitMap:{}, unitKeywordMap:{}",
                 key, value, keywordUnitMap, unitKeywordMap);
     }
 

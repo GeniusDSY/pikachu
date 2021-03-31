@@ -5,6 +5,9 @@ import cn.edu.cqupt.pikachu.ad.client.SponsorClient;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanGetDTO;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
+import cn.edu.cqupt.pikachu.ad.search.ISearch;
+import cn.edu.cqupt.pikachu.ad.search.vo.SearchRequest;
+import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +32,9 @@ public class SearchController {
     @Resource
     private SponsorClient sponsorClient;
 
+    @Resource
+    private ISearch search;
+
     @SuppressWarnings("all")
     @IgnoreResponseAdvice
     @PostMapping("getAdPlansByRibbon")
@@ -45,6 +51,13 @@ public class SearchController {
     public Response<List<AdPlanVO>> getAdPlans(AdPlanGetDTO adPlanGetDTO) {
         log.info("ad-search: SearchController getAdPlans -> {}", JSON.toJSONString(adPlanGetDTO));
         return sponsorClient.getAdPlans(adPlanGetDTO);
+    }
+
+    @PostMapping("fetchAds")
+    public SearchResponse fetchAds(SearchRequest request) {
+        log.info("ad-search: SearchController fetchAds -> {}", JSON.toJSONString(request));
+        return search.fetchAds(request);
+
     }
 
 }

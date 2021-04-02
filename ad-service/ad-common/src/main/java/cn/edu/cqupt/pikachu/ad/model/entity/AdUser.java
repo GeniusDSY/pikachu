@@ -32,7 +32,7 @@ public class AdUser {
      * 用户名称
      */
     @Basic
-    @Column(name = "name", nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     /**

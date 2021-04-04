@@ -41,7 +41,7 @@ public class PostRequestFilter extends ZuulFilter {
         String uri = request.getRequestURI();
         long duration = System.currentTimeMillis() - startTime;
 
-        log.info("uri: " + uri + ", duration" + duration / 100 + "ms");
+        log.info("uri: " + uri + ", duration = " + duration / 100 + "ms");
 
         return null;
     }

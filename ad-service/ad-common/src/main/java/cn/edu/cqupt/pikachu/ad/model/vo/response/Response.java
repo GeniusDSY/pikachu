@@ -1,7 +1,9 @@
 package cn.edu.cqupt.pikachu.ad.model.vo.response;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,14 +13,16 @@ import java.io.Serializable;
  * @desc : 响应数据模型
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = -2117304893907240721L;
 
     /**
-     * 结果数据
+     * 错误码
      */
-    private T data;
+    private String code;
 
     /**
      * 错误信息
@@ -26,9 +30,9 @@ public class Response<T> implements Serializable {
     private String message;
 
     /**
-     * 错误码
+     * 结果数据
      */
-    private String code;
+    private T data;
 
     /**
      * 异常响应构造函数
@@ -39,6 +43,17 @@ public class Response<T> implements Serializable {
         this.code = resultStatus.getCode();
         this.message = resultStatus.getDescription();
         this.data = null;
+    }
+
+    /**
+     * 成功响应构造函数
+     *
+     * @param data 响应数据
+     */
+    public Response(T data) {
+        this.code = ResultStatus.SUCCESS.getCode();
+        this.message = ResultStatus.SUCCESS.getDescription();
+        this.data = data;
     }
 
     /**

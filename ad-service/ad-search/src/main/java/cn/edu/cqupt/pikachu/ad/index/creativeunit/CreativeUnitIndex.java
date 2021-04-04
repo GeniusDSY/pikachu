@@ -20,17 +20,17 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject> {
 
     /**
-     * 创意单元对象缓存{adId-unitId, CreativeUnitObject}
+     * 创意单元对象缓存{adPlanId-unitId, CreativeUnitObject}
      */
     private static Map<String, CreativeUnitObject> creativeUnitObjectMap;
 
     /**
-     * 创意单元Id缓存{adId, Set<unitId>}
+     * 创意单元Id缓存{adPlanId, Set<unitId>}
      */
     private static Map<Long, Set<Long>> creativeUnitIdsMap;
 
     /**
-     * 单元创意Id缓存{unitId, Set<adId>}
+     * 单元创意Id缓存{unitId, Set<adPlanId>}
      */
     private static Map<Long, Set<Long>> unitCreativeIdsMap;
 

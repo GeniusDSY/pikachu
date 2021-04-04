@@ -2,6 +2,7 @@ package cn.edu.cqupt.pikachu.ad.utils;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -14,6 +15,7 @@ import java.util.function.Supplier;
  * @date :2021/2/5 22:57
  * @desc : 公共工具类
  */
+@Slf4j
 public class CommonUtils {
 
     /**
@@ -81,6 +83,6 @@ public class CommonUtils {
             result.append(arg);
             result.append("-");
         }
-        return result.deleteCharAt(result.length()).toString();
+        return result.deleteCharAt(result.length() - 1).toString();
     }
 }

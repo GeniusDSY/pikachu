@@ -7,7 +7,7 @@ server:
 # Spring相关配置
 spring:
   application:
-    name: eureka-client-ad-sponsor
+    name: ad-sponsor
   jpa:
     show-sql: true
     hibernate:

@@ -1,7 +1,7 @@
 # Spring相关配置
 spring:
   application:
-    name: eureka-client-ad-sponsor
+    name: eureka-client-ad-export
   jpa:
     show-sql: true
     hibernate:

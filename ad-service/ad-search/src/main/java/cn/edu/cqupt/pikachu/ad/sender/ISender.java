@@ -10,7 +10,7 @@ import cn.edu.cqupt.pikachu.ad.mysql.dto.MySqlRowData;
 public interface ISender {
 
     /**
-     * 增连数据投递
+     * 增量数据投递
      *
      * @param rowData 投递数据
      */

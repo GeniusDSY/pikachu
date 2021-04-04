@@ -23,17 +23,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class CommonResponseDataService implements ResponseBodyAdvice<Object> {
 
     @Override
+    @SuppressWarnings("all")
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         // 判断类上是否有忽略响应数据处理的注解
         if (methodParameter.getDeclaringClass().isAnnotationPresent(IgnoreResponseAdvice.class)) {
-            return false;
+            return true;
         }
 
         // 判断方法上是否有忽略响应数据处理的注解
         if (null == methodParameter.getMethodAnnotation(IgnoreResponseAdvice.class)) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 

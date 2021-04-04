@@ -1,4 +1,4 @@
-package cn.edu.cqupt.pikachu.ad.service;
+package cn.edu.cqupt.pikachu.ad;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
 import cn.edu.cqupt.pikachu.ad.dao.AdPlanRepository;
@@ -8,6 +8,7 @@ import cn.edu.cqupt.pikachu.ad.dao.unit_condition.AdUnitDistrictRepository;
 import cn.edu.cqupt.pikachu.ad.dao.unit_condition.AdUnitItRepository;
 import cn.edu.cqupt.pikachu.ad.dao.unit_condition.AdUnitKeywordRepository;
 import cn.edu.cqupt.pikachu.ad.dao.unit_condition.CreativeUnitRepository;
+import cn.edu.cqupt.pikachu.ad.dump.DConstant;
 import cn.edu.cqupt.pikachu.ad.dump.table.*;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdPlan;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
@@ -59,6 +60,20 @@ public class DumpDataService {
 
     @Resource
     private AdUnitKeywordRepository keywordRepository;
+
+    /**
+     * dump数据表信息
+     */
+    public void dumpAdTableData() {
+
+        dumpAdPlanTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_PLAN));
+        dumpAdUnitTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_UNIT));
+        dumpAdCreativeTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_CREATIVE));
+        dumpAdCreativeUnitTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_CREATIVE_UNIT));
+        dumpAdUnitDistrictTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_UNIT_DISTRICT));
+        dumpAdUnitItTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_UNIT_IT));
+        dumpAdUnitKeywordTable(String.format("%s%s", DConstant.DATA_ROOT_STR, DConstant.AD_UNIT_KEYWORD));
+    }
 
     /**
      * dump广告计划数据表
@@ -251,9 +266,9 @@ public class DumpDataService {
             return;
         }
 
-        List<AdKeywordTable> unitKeywordTables = new ArrayList<>();
+        List<AdUnitKeywordTable> unitKeywordTables = new ArrayList<>();
         unitKeywords.forEach(k -> unitKeywordTables.add(
-                new AdKeywordTable(
+                new AdUnitKeywordTable(
                         k.getUnitId(),
                         k.getKeyword()
                 )
@@ -261,7 +276,7 @@ public class DumpDataService {
 
         Path path = Paths.get(fileName);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            for (AdKeywordTable unitKeywordTable : unitKeywordTables) {
+            for (AdUnitKeywordTable unitKeywordTable : unitKeywordTables) {
                 writer.write(JSON.toJSONString(unitKeywordTable));
                 writer.newLine();
             }

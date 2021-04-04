@@ -14,6 +14,7 @@ import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdUnitVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.UserVO;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,7 @@ public class ConvertUtils {
      * @throws AdException Ad自定义异常
      */
     public static AdUser userDTO2AdUser(UserDTO userDTO) throws AdException {
-        AdUser user = new AdUser();
-        user.setUsername(userDTO.getUsername());
-        user.setToken(CommonUtils.md5Encrypt(userDTO.getUsername()));
-        return user;
+        return new AdUser(userDTO.getUsername(), CommonUtils.md5Encrypt(userDTO.getUsername()));
     }
 
     /**
@@ -75,7 +73,8 @@ public class ConvertUtils {
      * @return AdPlan展示数据
      */
     public static AdPlanVO adPlan2AdPlanVO(AdPlan adPlan) {
-        return new AdPlanVO(adPlan.getId(), adPlan.getPlanName());
+        return new AdPlanVO(adPlan.getId(), adPlan.getPlanName(), adPlan.getPlanStatus(), adPlan.getStartDate(),
+                adPlan.getEndDate(), adPlan.getCreateTime(), adPlan.getUpdateTime());
     }
 
     /**
@@ -87,7 +86,8 @@ public class ConvertUtils {
     public static List<AdPlanVO> adPlan2AdPlanVO(List<AdPlan> adPlans) {
 
         return adPlans.stream().map(adPlan ->
-                new AdPlanVO(adPlan.getId(), adPlan.getPlanName()))
+                new AdPlanVO(adPlan.getId(), adPlan.getPlanName(), adPlan.getPlanStatus(), adPlan.getStartDate(),
+                        adPlan.getEndDate(), adPlan.getCreateTime(), adPlan.getUpdateTime()))
                 .collect(Collectors.toList());
     }
 
@@ -132,6 +132,9 @@ public class ConvertUtils {
         creative.setDuration(creativeDTO.getDuration());
         creative.setAuditStatus(CommonStatus.VALID.getStatus());
         creative.setUserId(creativeDTO.getUserId());
+        creative.setUrl(creativeDTO.getUrl());
+        creative.setCreateTime(new Date());
+        creative.setUpdateTime(creative.getCreateTime());
         return creative;
     }
 

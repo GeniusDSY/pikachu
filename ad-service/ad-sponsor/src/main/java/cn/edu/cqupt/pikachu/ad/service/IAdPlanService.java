@@ -4,6 +4,7 @@ import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanDTO;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanGetDTO;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface IAdPlanService {
      * @return 广告推广计划信息
      * @throws AdException 广告系统异常
      */
-    AdPlanVO createAdPlan(AdPlanDTO adPlanDTO) throws AdException;
+    Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO) throws AdException;
 
     /**
      * 批量获取推广计划列表
@@ -30,7 +31,7 @@ public interface IAdPlanService {
      * @return 推广计划列表信息
      * @throws AdException 广告系统异常和
      */
-    List<AdPlanVO> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO) throws AdException;
+    Response<List<AdPlanVO>> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO);
 
     /**
      * 更新推广计划
@@ -39,7 +40,7 @@ public interface IAdPlanService {
      * @return 更新后的推广计划信息
      * @throws AdException 广告系统异常
      */
-    AdPlanVO updateAdPlan(AdPlanDTO adPlanDTO) throws AdException;
+    Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO) throws AdException;
 
     /**
      * 删除推广计划

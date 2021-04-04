@@ -3,6 +3,7 @@ package cn.edu.cqupt.pikachu.ad.service;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.CreativeDTO;
 import cn.edu.cqupt.pikachu.ad.model.vo.CreativeVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 
 /**
  * @author :DengSiYuan
@@ -17,7 +18,7 @@ public interface ICreativeService {
      * @param creativeDTO 创意传入数据
      * @return 创意展示数据
      */
-    CreativeVO createCreative(CreativeDTO creativeDTO) throws AdException;
+    Response<CreativeVO> createCreative(CreativeDTO creativeDTO);
 
 
 

@@ -10,6 +10,7 @@ import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanGetDTO;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdPlan;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.IAdPlanService;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -45,26 +46,26 @@ public class AdPlanServiceImpl implements IAdPlanService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public AdPlanVO createAdPlan(AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO) throws AdException {
 
         if (!adPlanDTO.createValidate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
         // 检查User是否存在
         Optional<AdUser> user = userRepository.findById(adPlanDTO.getUserId());
         if (!user.isPresent()) {
-            throw new AdException(ResultStatus.USER_NOT_EXISTED);
+            return new Response<>(ResultStatus.USER_NOT_EXISTED);
         }
 
         AdPlan oldPlan = planRepository.findByUserIdAndPlanName(adPlanDTO.getUserId(), adPlanDTO.getPlanName());
         if (null != oldPlan) {
-            throw new AdException(ResultStatus.PLAN_EXISTED);
+            return new Response<>(ResultStatus.PLAN_EXISTED);
         }
 
         AdPlan newAdPlan = planRepository.save(ConvertUtils.adPlanDTO2AdPlan(adPlanDTO));
 
-        return ConvertUtils.adPlan2AdPlanVO(newAdPlan);
+        return new Response<>(ConvertUtils.adPlan2AdPlanVO(newAdPlan));
     }
 
     /**
@@ -75,14 +76,14 @@ public class AdPlanServiceImpl implements IAdPlanService {
      * @throws AdException 广告系统异常和
      */
     @Override
-    public List<AdPlanVO> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO) throws AdException {
+    public Response<List<AdPlanVO>> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO) {
 
         if (!adPlanGetDTO.validate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
-        return ConvertUtils.adPlan2AdPlanVO(planRepository
-                .findAllByIdInAndUserId(adPlanGetDTO.getIds(), adPlanGetDTO.getUserId()));
+         return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository
+                .findAllByIdInAndUserId(adPlanGetDTO.getIds(), adPlanGetDTO.getUserId())));
     }
 
     /**
@@ -94,20 +95,20 @@ public class AdPlanServiceImpl implements IAdPlanService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public AdPlanVO updateAdPlan(AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO) throws AdException {
 
         if (!adPlanDTO.updateValidate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
         AdPlan oldPlan = planRepository.findByIdAndUserId(adPlanDTO.getId(), adPlanDTO.getUserId());
         if (null == oldPlan) {
-            throw new AdException(ResultStatus.PLAN_NOT_EXISTED);
+            return new Response<>(ResultStatus.PLAN_NOT_EXISTED);
         }
 
         oldPlan = ConvertUtils.adPlanDTO2AdPlan(adPlanDTO);
         oldPlan.setUpdateTime(new Date());
-        return ConvertUtils.adPlan2AdPlanVO(planRepository.save(oldPlan));
+        return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository.save(oldPlan)));
     }
 
     /**

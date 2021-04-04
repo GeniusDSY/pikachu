@@ -35,21 +35,22 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserVO createUser(UserDTO userDTO) throws AdException {
+    public Response<UserVO> createUser(UserDTO userDTO) throws AdException {
 
         if (!userDTO.validate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
         AdUser oldUser = userRepository.findByUsername(userDTO.getUsername());
 
         if (null != oldUser) {
-            throw new AdException((ResultStatus.USER_EXISTED));
+            return new Response<>((ResultStatus.USER_EXISTED));
         }
 
         AdUser newUser = userRepository.save(ConvertUtils.userDTO2AdUser(userDTO));
+        log.info("ad-sponsor: UserService createUser -> newUser:{}", newUser);
 
-        return ConvertUtils.adUser2UserVO(newUser);
+        return new Response<>(ConvertUtils.adUser2UserVO(newUser));
     }
 
     /**
@@ -61,19 +62,19 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserVO updateUser(UserDTO userDTO) throws AdException {
+    public Response<UserVO> updateUser(UserDTO userDTO) throws AdException{
 
         if (!userDTO.validate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
         AdUser oldUser = userRepository.findByUsername(userDTO.getUsername());
 
         if (null == oldUser) {
-            throw new AdException((ResultStatus.USER_NOT_EXISTED));
+            return new Response<>((ResultStatus.USER_NOT_EXISTED));
         }
 
         AdUser newUser = userRepository.save(ConvertUtils.userDTO2AdUser(userDTO));
 
-        return ConvertUtils.adUser2UserVO(newUser);
+        return new Response<>(ConvertUtils.adUser2UserVO(newUser));
     }
 }

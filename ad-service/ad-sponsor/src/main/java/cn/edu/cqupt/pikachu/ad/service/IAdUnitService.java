@@ -3,6 +3,7 @@ package cn.edu.cqupt.pikachu.ad.service;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.*;
 import cn.edu.cqupt.pikachu.ad.model.vo.*;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 
 /**
  * @author :DengSiYuan
@@ -18,7 +19,7 @@ public interface IAdUnitService {
      * @return
      * @throws AdException
      */
-    AdUnitVO createUnit(AdUnitDTO adUnitDTO) throws AdException;
+    Response<AdUnitVO> createUnit(AdUnitDTO adUnitDTO);
 
     /**
      * 创建推广单元关键字
@@ -27,7 +28,7 @@ public interface IAdUnitService {
      * @return 推广单元关键字展示数据
      * @throws AdException 广告系统异常
      */
-    AdUnitKeywordVO createUnitKeyword(AdUnitKeywordDTO adUnitKeywordDTO) throws AdException;
+    Response<AdUnitKeywordVO> createUnitKeyword(AdUnitKeywordDTO adUnitKeywordDTO);
 
     /**
      * 创建推广单元兴趣
@@ -36,7 +37,7 @@ public interface IAdUnitService {
      * @return 推广单元兴趣展示数据
      * @throws AdException 广告系统异常
      */
-    AdUnitItVO createUnitIt(AdUnitItDTO adUnitItDTO) throws AdException;
+    Response<AdUnitItVO> createUnitIt(AdUnitItDTO adUnitItDTO);
 
     /**
      * 创建推广单元区域
@@ -45,7 +46,7 @@ public interface IAdUnitService {
      * @return 推广单元区域展示数据
      * @throws AdException 广告系统异常
      */
-    AdUnitDistrictVO createUnitDistrict(AdUnitDistrictDTO adUnitDistrictDTO) throws AdException;
+    Response<AdUnitDistrictVO> createUnitDistrict(AdUnitDistrictDTO adUnitDistrictDTO);
 
     /**
      * 创建创意单元
@@ -54,6 +55,6 @@ public interface IAdUnitService {
      * @return 创意单元展示数据
      * @throws AdException 广告系统异常
      */
-    CreativeUnitVO createCreativeUnit(CreativeUnitDTO creativeUnitDTO) throws AdException;
+    Response<CreativeUnitVO> createCreativeUnit(CreativeUnitDTO creativeUnitDTO);
 
 }

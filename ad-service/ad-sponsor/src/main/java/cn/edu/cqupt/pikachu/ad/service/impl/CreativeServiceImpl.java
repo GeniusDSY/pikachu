@@ -8,6 +8,7 @@ import cn.edu.cqupt.pikachu.ad.model.dto.CreativeDTO;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
 import cn.edu.cqupt.pikachu.ad.model.entity.Creative;
 import cn.edu.cqupt.pikachu.ad.model.vo.CreativeVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.ICreativeService;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,22 +39,22 @@ public class CreativeServiceImpl implements ICreativeService {
      * @return 创意展示数据
      */
     @Override
-    public CreativeVO createCreative(CreativeDTO creativeDTO) throws AdException{
+    public Response<CreativeVO> createCreative(CreativeDTO creativeDTO) {
 
         if (!creativeDTO.createValidate()) {
-            throw new AdException(ResultStatus.REQUEST_PARAM_ERROR);
+            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
         // 判断用户是否存在
         Optional<AdUser> user = userRepository.findById(creativeDTO.getUserId());
         if (!user.isPresent()) {
-            throw new AdException(ResultStatus.USER_NOT_EXISTED);
+            return new Response<>(ResultStatus.USER_NOT_EXISTED);
         }
 
         // 创建新的创意存入
         Creative creative = creativeRepository.save(ConvertUtils.creativeDTO2Creative(creativeDTO));
 
-        return new CreativeVO(creative.getId(), creative.getName());
+        return new Response<>(new CreativeVO(creative.getId(), creative.getName()));
     }
 
 }

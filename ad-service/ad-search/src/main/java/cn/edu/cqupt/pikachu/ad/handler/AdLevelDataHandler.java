@@ -13,6 +13,7 @@ import cn.edu.cqupt.pikachu.ad.index.creativeunit.CreativeUnitIndex;
 import cn.edu.cqupt.pikachu.ad.index.creativeunit.CreativeUnitObject;
 import cn.edu.cqupt.pikachu.ad.index.district.UnitDistrictIndex;
 import cn.edu.cqupt.pikachu.ad.index.interest.UnitItIndex;
+import cn.edu.cqupt.pikachu.ad.index.keyword.UnitKeywordIndex;
 import cn.edu.cqupt.pikachu.ad.mysql.constant.OpType;
 import cn.edu.cqupt.pikachu.ad.utils.CommonUtils;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
@@ -124,12 +125,13 @@ public class AdLevelDataHandler {
      * @param districtTable 地域数据表
      * @param type          操作类型
      */
-    public static void handlelevel4(AdUnitDistrictTable districtTable, OpType type) {
+    public static void handleLevel4(AdUnitDistrictTable districtTable, OpType type) {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(districtTable.getUnitId());
         if (null == unitObject) {
             log.error("ad-search:AdLevelDataHandler handleLevel4 found AdUnitDistrictTable index error -> unitId={}",
                     districtTable.getUnitId());
+            return;
         }
 
         String key = CommonUtils.stringConcat(districtTable.getProvince(), districtTable.getCity());
@@ -149,6 +151,7 @@ public class AdLevelDataHandler {
         if (null == unitObject) {
             log.error("ad-search:AdLevelDataHandler handleLevel4 found AdUnitItTable index error -> unitId={}",
                     itTable.getUnitId());
+            return;
         }
 
         Set<Long> value = new HashSet<>(Collections.singleton(itTable.getUnitId()));
@@ -161,16 +164,17 @@ public class AdLevelDataHandler {
      * @param keywordTable 关键字数据表
      * @param type         操作类型
      */
-    public static void handleLevel4(AdKeywordTable keywordTable, OpType type) {
+    public static void handleLevel4(AdUnitKeywordTable keywordTable, OpType type) {
 
         AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(keywordTable.getUnitId());
         if (null == unitObject) {
             log.error("ad-search:AdLevelDataHandler handleLevel4 found AdKeywordTable index error -> unitId={}",
                     keywordTable.getUnitId());
+            return;
         }
 
         Set<Long> value = new HashSet<>(Collections.singleton(keywordTable.getUnitId()));
-        handleBinLogEvent(DataTable.of(UnitItIndex.class), keywordTable.getKeyword(), value, type);
+        handleBinLogEvent(DataTable.of(UnitKeywordIndex.class), keywordTable.getKeyword(), value, type);
     }
 
     /**

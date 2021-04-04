@@ -15,6 +15,7 @@
 
     <properties>
         <ad-common.version>0.0.1-SNAPSHOT</ad-common.version>
+        <ad-export.version>0.0.1-SNAPSHOT</ad-export.version>
         <mysql-binlog-connector-java.version>0.13.0</mysql-binlog-connector-java.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <spring-kafka.version>2.1.5.RELEASE</spring-kafka.version>
@@ -25,6 +26,12 @@
             <groupId>cn.edu.cqupt.pikachu</groupId>
             <artifactId>ad-common</artifactId>
             <version>${ad-common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.edu.cqupt.pikachu</groupId>
+            <artifactId>ad-export</artifactId>
+            <version>${ad-export.version}</version>
         </dependency>
 
         <dependency>

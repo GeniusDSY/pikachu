@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdKeywordTable {
+public class AdUnitKeywordTable {
 
     /**
      * 推广单元Id

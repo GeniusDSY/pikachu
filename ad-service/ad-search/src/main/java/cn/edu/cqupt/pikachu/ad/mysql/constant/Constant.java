@@ -26,14 +26,24 @@ public class Constant {
         public static final String TABLE_NAME = "ad_plan";
 
         /**
-         * 数据列——Id
+         * 数据列——id
          */
         public static final String COLUMN_ID = "id";
 
         /**
-         * 数据列——用户Id
+         * 数据列——user_id
          */
         public static final String COLUMN_USER_ID = "user_id";
+
+        /**
+         * 数据列——plan_name
+         */
+        public static final String COLUMN_PLAN_NAME = "plan_name";
+
+        /**
+         * 数据列——plan_status
+         */
+        public static final String COLUMN_PLAN_STATUS = "plan_status";
 
         /**
          * 开始时间

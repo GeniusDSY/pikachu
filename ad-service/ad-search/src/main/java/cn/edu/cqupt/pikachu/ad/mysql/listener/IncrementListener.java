@@ -8,6 +8,7 @@ import cn.edu.cqupt.pikachu.ad.mysql.dto.TableTemplate;
 import cn.edu.cqupt.pikachu.ad.sender.ISender;
 import com.github.shyiko.mysql.binlog.event.EventType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import java.util.Map;
 @Component
 public class IncrementListener implements IListener {
 
-    @Resource
+    @Resource(name = "kafkaSender")
     private ISender sender;
 
     @Resource

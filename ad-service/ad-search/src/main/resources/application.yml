@@ -7,7 +7,7 @@ server:
 # Spring相关配置
 spring:
   application:
-    name: eureka-client-ad-search
+    name: ad-search
   jpa:
     show-sql: true
     hibernate:
@@ -26,6 +26,10 @@ spring:
       min-idle: 2
       # 初始化连接数
       initial-size: 2
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    listener:
+      concurrency: 4
 
 # 注册到eureka上
 eureka:
@@ -37,6 +41,12 @@ eureka:
 feign:
   hystrix:
     enabled: true
+hystrix:
+  command:
+    default:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 5000
 
 management:
   endpoints:
@@ -50,5 +60,7 @@ adconf:
     port: 3306
     username: root
     password: root
-    binlogName: ""
+    binlogName: binlog.000001
     position: -1
+  kafka:
+    topic: ad-search-mysql-data

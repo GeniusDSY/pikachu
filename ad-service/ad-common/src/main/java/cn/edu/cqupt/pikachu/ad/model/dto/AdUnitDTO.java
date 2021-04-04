@@ -41,7 +41,7 @@ public class AdUnitDTO {
      * @return 有效与否
      */
     public boolean createValidate() {
-        return planId != null && StringUtils.isNotEmpty(unitName)
+        return null != planId && StringUtils.isNotEmpty(unitName)
                 && null != positionType && null != budget;
     }
 }

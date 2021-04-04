@@ -57,9 +57,20 @@ public enum ResultStatus {
     UNIT_EXISTED("UNIT_EXISTED", "推广单元已存在"),
 
     /**
+     * 推广单元不存在
+     */
+    UNIT_NOT_EXIST("UNIT_NOT_EXIST", "推广单元不存在"),
+
+    /**
      * 投放系统异常
      */
-    SPONSOR_ERROR("SPONSOR_ERROR", "投放系统异常");
+    SPONSOR_ERROR("SPONSOR_ERROR", "投放系统异常"),
+
+    /**
+     * 推广单元或创意不存在
+     */
+    UNIT_OR_CREATIVE_NOT_EXIST("UNIT_OR_CREATIVE_NOT_EXIST", "推广单元或创意不存在"),
+    ;
 
     /**
      * 状态码

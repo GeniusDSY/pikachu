@@ -1,0 +1,24 @@
+# 服务相关配置
+server:
+  port: 8001
+  servlet:
+    context-path: /dashboard
+
+# Spring相关配置
+spring:
+  application:
+    name: ad-dashboard
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+# 注册到eureka上
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

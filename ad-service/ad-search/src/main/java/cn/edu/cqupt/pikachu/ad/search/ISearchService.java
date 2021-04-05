@@ -9,7 +9,7 @@ import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
  * @date :2021/3/29 17:57
  * @desc : 检索服务
  */
-public interface ISearch {
+public interface ISearchService {
 
     /**
      * 获取广告

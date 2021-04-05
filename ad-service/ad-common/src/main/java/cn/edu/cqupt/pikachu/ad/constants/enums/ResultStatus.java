@@ -70,7 +70,11 @@ public enum ResultStatus {
      * 推广单元或创意不存在
      */
     UNIT_OR_CREATIVE_NOT_EXIST("UNIT_OR_CREATIVE_NOT_EXIST", "推广单元或创意不存在"),
-    ;
+
+    /**
+     * 服务降级熔断
+     */
+    SERVICE_FUSE("SERVICE_FUSE", "服务降级熔断");
 
     /**
      * 状态码

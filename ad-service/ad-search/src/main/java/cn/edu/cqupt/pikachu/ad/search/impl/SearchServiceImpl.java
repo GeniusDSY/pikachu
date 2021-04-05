@@ -12,7 +12,7 @@ import cn.edu.cqupt.pikachu.ad.index.district.UnitDistrictIndex;
 import cn.edu.cqupt.pikachu.ad.index.interest.UnitItIndex;
 import cn.edu.cqupt.pikachu.ad.index.keyword.UnitKeywordIndex;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
-import cn.edu.cqupt.pikachu.ad.search.ISearch;
+import cn.edu.cqupt.pikachu.ad.search.ISearchService;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchRequest;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
 import cn.edu.cqupt.pikachu.ad.search.vo.feature.DistrictFeature;
@@ -35,7 +35,7 @@ import java.util.*;
  */
 @Slf4j
 @Service
-public class SearchImpl implements ISearch {
+public class SearchServiceImpl implements ISearchService {
 
 
     /**
@@ -45,7 +45,8 @@ public class SearchImpl implements ISearch {
      * @param e       异常
      * @return 熔断后的响应
      */
-    public Response<SearchResponse> fallback(SearchRequest request, Throwable e) {
+    public Response<SearchResponse> fallBack(SearchRequest request, Throwable e) {
+        log.error("ad-sponsor: SearchImpl fetchAds -> request:{}-error:{}", JSON.toJSONString(request), e);
         return new Response<>(ResultStatus.SERVICE_FUSE);
     }
     /**
@@ -55,7 +56,7 @@ public class SearchImpl implements ISearch {
      * @return 检索响应
      */
     @Override
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand(fallbackMethod = "fallBack")
     public Response<SearchResponse> fetchAds(SearchRequest request) {
 
         // 请求的广告位信息

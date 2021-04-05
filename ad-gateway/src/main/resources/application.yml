@@ -1,6 +1,6 @@
 # zuul 启动端口
 server:
-  port: 8090
+  port: 8080
 
 # zuul 模块项目名称
 spring:
@@ -11,7 +11,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://localhost:8761/eureka/
 ribbon:
   ReadTimeout: 12000
   ConnectTimeout: 12000
@@ -28,4 +28,8 @@ zuul:
     search:
       path: /ad-search/**
       serviceId: ad-search
+      strip-prefix: false
+    dashboard:
+      path: /ad-dashboard/**
+      serviceId: ad-dashboard
       strip-prefix: false

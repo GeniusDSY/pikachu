@@ -1,6 +1,6 @@
 # 服务相关配置
 server:
-  port: 8080
+  port: 8001
   servlet:
     context-path: /ad-sponsor
 
@@ -31,4 +31,15 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      clustor: SPONSOR
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

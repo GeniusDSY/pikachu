@@ -13,6 +13,8 @@ import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.IAdPlanService;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
+import com.alibaba.fastjson.JSON;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,13 +78,14 @@ public class AdPlanServiceImpl implements IAdPlanService {
      * @throws AdException 广告系统异常和
      */
     @Override
+    @HystrixCommand(fallbackMethod = "fallBack")
     public Response<List<AdPlanVO>> getAdPlanByIds(AdPlanGetDTO adPlanGetDTO) {
 
         if (!adPlanGetDTO.validate()) {
             return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
-         return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository
+        return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository
                 .findAllByIdInAndUserId(adPlanGetDTO.getIds(), adPlanGetDTO.getUserId())));
     }
 
@@ -134,5 +137,17 @@ public class AdPlanServiceImpl implements IAdPlanService {
         oldPlan.setPlanStatus(CommonStatus.INVALID.getStatus());
         oldPlan.setUpdateTime(new Date());
         planRepository.save(oldPlan);
+    }
+
+    /**
+     * 服务熔断的回调方法
+     *
+     * @param adPlanGetDTO 请求
+     * @param e            异常
+     * @return 熔断后的响应
+     */
+    public Response<List<AdPlanVO>> fallBack(AdPlanGetDTO adPlanGetDTO, Throwable e) {
+        log.error("ad-sponsor: AdPlanService getAdPlanByIds -> request:{}-error:{}", JSON.toJSONString(adPlanGetDTO), e);
+        return new Response<>(ResultStatus.SERVICE_FUSE);
     }
 }

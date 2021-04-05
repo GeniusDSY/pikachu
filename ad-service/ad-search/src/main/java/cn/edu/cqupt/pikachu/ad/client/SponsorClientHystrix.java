@@ -16,7 +16,6 @@ import java.util.List;
 @Component
 public class SponsorClientHystrix implements SponsorClient {
 
-
     @Override
     public Response<List<AdPlanVO>> getAdPlans(AdPlanGetDTO adPlanGetDTO) {
         return new Response<>(ResultStatus.SPONSOR_ERROR);

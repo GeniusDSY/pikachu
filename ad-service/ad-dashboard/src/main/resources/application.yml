@@ -1,8 +1,8 @@
 # 服务相关配置
 server:
-  port: 8001
+  port: 9000
   servlet:
-    context-path: /dashboard
+    context-path: /ad-dashboard
 
 # Spring相关配置
 spring:
@@ -15,10 +15,21 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+turbine:
+  app-config: ad-sponsor,ad-search # 指定了需要收集监控信息的服务名，多个以“,”进行区分
+  combine-host-port: true
+    # 集群名称
+  cluster-name-expression: metadata['cluster']
+  aggregator:
+    cluster-config: SEARCH,SPONSOR

@@ -1,6 +1,7 @@
 package cn.edu.cqupt.pikachu.ad.search.impl;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
+import cn.edu.cqupt.pikachu.ad.constants.enums.ResultStatus;
 import cn.edu.cqupt.pikachu.ad.index.DataTable;
 import cn.edu.cqupt.pikachu.ad.index.adunit.AdUnitIndex;
 import cn.edu.cqupt.pikachu.ad.index.adunit.AdUnitObject;
@@ -10,6 +11,7 @@ import cn.edu.cqupt.pikachu.ad.index.creativeunit.CreativeUnitIndex;
 import cn.edu.cqupt.pikachu.ad.index.district.UnitDistrictIndex;
 import cn.edu.cqupt.pikachu.ad.index.interest.UnitItIndex;
 import cn.edu.cqupt.pikachu.ad.index.keyword.UnitKeywordIndex;
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.search.ISearch;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchRequest;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
@@ -19,6 +21,7 @@ import cn.edu.cqupt.pikachu.ad.search.vo.feature.ItFeature;
 import cn.edu.cqupt.pikachu.ad.search.vo.feature.KeywordFeature;
 import cn.edu.cqupt.pikachu.ad.search.vo.media.AdSlot;
 import com.alibaba.fastjson.JSON;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,17 @@ import java.util.*;
 @Service
 public class SearchImpl implements ISearch {
 
+
+    /**
+     * 服务熔断的回调方法
+     *
+     * @param request 请求
+     * @param e       异常
+     * @return 熔断后的响应
+     */
+    public Response<SearchResponse> fallback(SearchRequest request, Throwable e) {
+        return new Response<>(ResultStatus.SERVICE_FUSE);
+    }
     /**
      * 获取广告
      *
@@ -41,7 +55,8 @@ public class SearchImpl implements ISearch {
      * @return 检索响应
      */
     @Override
-    public SearchResponse fetchAds(SearchRequest request) {
+    @HystrixCommand(fallbackMethod = "fallback")
+    public Response<SearchResponse> fetchAds(SearchRequest request) {
 
         // 请求的广告位信息
         List<AdSlot> adSlots = request.getRequestInfo().getAdSlots();
@@ -92,7 +107,7 @@ public class SearchImpl implements ISearch {
         }
 
         log.info("ad-search:Search fetchAds -> {}-{}", JSON.toJSONString(request), JSON.toJSONString(response));
-        return response;
+        return new Response<>(response);
     }
 
     /**

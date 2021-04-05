@@ -1,5 +1,6 @@
 package cn.edu.cqupt.pikachu.ad.search;
 
+import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchRequest;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
 
@@ -16,5 +17,5 @@ public interface ISearch {
      * @param request 检索请求
      * @return 检索响应
      */
-    SearchResponse fetchAds(SearchRequest request);
+    Response<SearchResponse> fetchAds(SearchRequest request);
 }

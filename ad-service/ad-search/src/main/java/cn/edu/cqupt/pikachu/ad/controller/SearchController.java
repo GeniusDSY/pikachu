@@ -1,11 +1,10 @@
 package cn.edu.cqupt.pikachu.ad.controller;
 
-import cn.edu.cqupt.pikachu.ad.annotation.IgnoreResponseAdvice;
 import cn.edu.cqupt.pikachu.ad.client.SponsorClient;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanGetDTO;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
-import cn.edu.cqupt.pikachu.ad.search.ISearch;
+import cn.edu.cqupt.pikachu.ad.search.ISearchService;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchRequest;
 import cn.edu.cqupt.pikachu.ad.search.vo.SearchResponse;
 import com.alibaba.fastjson.JSON;
@@ -33,10 +32,10 @@ public class SearchController {
 
     private final SponsorClient sponsorClient;
 
-    private final ISearch search;
+    private final ISearchService search;
 
     @Autowired
-    public SearchController(ISearch search, SponsorClient sponsorClient) {
+    public SearchController(ISearchService search, SponsorClient sponsorClient) {
         this.search = search;
         this.sponsorClient = sponsorClient;
     }
@@ -58,7 +57,7 @@ public class SearchController {
     }
 
     @PostMapping("fetchAds")
-    public SearchResponse fetchAds(@RequestBody SearchRequest request) {
+    public Response<SearchResponse> fetchAds(@RequestBody SearchRequest request) {
         log.info("ad-search: SearchController fetchAds -> {}", JSON.toJSONString(request));
         return search.fetchAds(request);
 

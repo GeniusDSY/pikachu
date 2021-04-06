@@ -74,7 +74,28 @@ public enum ResultStatus {
     /**
      * 服务降级熔断
      */
-    SERVICE_FUSE("SERVICE_FUSE", "服务降级熔断");
+    SERVICE_FUSE("SERVICE_FUSE", "服务降级熔断"),
+
+    /**
+     * 创建用户异常
+     */
+    CREATE_USER_ERROR("CREATE_USER_ERROR", "创建用户异常"),
+
+    /**
+     * 更新用户信息异常
+     */
+    UPDATE_USER_ERROR("UPDATE_USER_ERROR", "更新用户异常"),
+
+    /**
+     * 更新广告计划异常
+     */
+    UPDATE_ADPLAN_ERROR("UPDATE_ADPLAN_ERROR", "更新广告计划异常"),
+
+    /**
+     * 创建广告计划异常
+     */
+    CREATE_ADPLAN_ERROR("CREATE_ADPLAN_ERROR", "创建广告计划异常"),
+    ;
 
     /**
      * 状态码

@@ -1,6 +1,8 @@
 package cn.edu.cqupt.pikachu.ad.model.entity;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
+import cn.edu.cqupt.pikachu.ad.constants.enums.UserStatusEnums;
+import cn.edu.cqupt.pikachu.ad.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,20 @@ public class AdUser {
     private String username;
 
     /**
+     * 用户年龄
+     */
+    @Basic
+    @Column(name = "age", nullable = false, insertable = false)
+    private Integer age;
+
+    /**
+     * 用户性别
+     */
+    @Basic
+    @Column(name = "gender", nullable = false, insertable = false)
+    private Integer gender;
+
+    /**
      * 用户Token
      */
     @Basic
@@ -63,10 +79,13 @@ public class AdUser {
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
-    public AdUser(String username, String token) {
+    public AdUser(Long userId, String username, Integer age, Integer gender, Integer userStatus, String token) {
+        this.id = userId;
         this.username = username;
+        this.age = (null == age ? -1 : age);
+        this.gender = (null == gender ? -1 : gender);
         this.token = token;
-        this.userStatus = CommonStatus.VALID.getStatus();
+        this.userStatus = (null == userStatus ? -1 : userStatus);
         this.createTime = new Date();
         this.updateTime = createTime;
     }

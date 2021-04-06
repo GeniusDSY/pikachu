@@ -77,7 +77,8 @@ public class AdPlan {
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
-    public AdPlan(Long userId, String planName, Date startDate, Date endDate) {
+    public AdPlan(Long id, Long userId, String planName, Date startDate, Date endDate) {
+        this.id = id;
         this.userId = userId;
         this.planName = planName;
         this.planStatus = CommonStatus.VALID.getStatus();

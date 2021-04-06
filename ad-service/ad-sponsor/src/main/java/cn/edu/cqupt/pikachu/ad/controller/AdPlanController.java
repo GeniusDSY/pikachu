@@ -27,7 +27,7 @@ public class AdPlanController {
     private IAdPlanService adPlanService;
 
     @PostMapping("create")
-    public Response<AdPlanVO> createAdPlan(@RequestBody AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> createAdPlan(@RequestBody AdPlanDTO adPlanDTO) {
         log.info("ad-sponsor: AdPlanController createAdPlan -> {}", JSON.toJSONString(adPlanDTO));
         return adPlanService.createAdPlan(adPlanDTO);
     }
@@ -39,7 +39,7 @@ public class AdPlanController {
     }
 
     @PutMapping("update")
-    public Response<AdPlanVO> updateAdPlan(@RequestBody AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> updateAdPlan(@RequestBody AdPlanDTO adPlanDTO) {
         log.info("ad-sponsor: AdPlanController updateAdPlan -> {}", JSON.toJSONString(adPlanDTO));
         return adPlanService.updateAdPlan(adPlanDTO);
     }

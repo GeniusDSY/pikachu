@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author :DengSiYuan
@@ -35,22 +37,26 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Response<UserVO> createUser(UserDTO userDTO) throws AdException {
+    public Response<UserVO> createUser(UserDTO userDTO) {
+        try {
+            if (userDTO.validate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
 
-        if (!userDTO.validate()) {
-            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            AdUser oldUser = userRepository.findByUsername(userDTO.getUsername());
+
+            if (null != oldUser) {
+                return new Response<>((ResultStatus.USER_EXISTED));
+            }
+
+            AdUser newUser = userRepository.save(ConvertUtils.userDTO2AdUser(userDTO));
+            log.info("ad-sponsor: UserService createUser -> newUser:{}", newUser);
+            return new Response<>(ConvertUtils.adUser2UserVO(newUser));
+        } catch (Exception e) {
+            log.error("ad-sponsor: UserService updateUser -> request={}-error={}", userDTO, e.getMessage());
+            return new Response<>(ResultStatus.CREATE_USER_ERROR);
         }
 
-        AdUser oldUser = userRepository.findByUsername(userDTO.getUsername());
-
-        if (null != oldUser) {
-            return new Response<>((ResultStatus.USER_EXISTED));
-        }
-
-        AdUser newUser = userRepository.save(ConvertUtils.userDTO2AdUser(userDTO));
-        log.info("ad-sponsor: UserService createUser -> newUser:{}", newUser);
-
-        return new Response<>(ConvertUtils.adUser2UserVO(newUser));
     }
 
     /**
@@ -62,19 +68,24 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Response<UserVO> updateUser(UserDTO userDTO) throws AdException{
+    public Response<UserVO> updateUser(UserDTO userDTO){
+        try {
+            if (userDTO.validate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
+            Optional<AdUser> searchResult = userRepository.findById(userDTO.getUserId());
 
-        if (!userDTO.validate()) {
-            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            if (!searchResult.isPresent()) {
+                return new Response<>((ResultStatus.USER_NOT_EXISTED));
+            }
+
+            AdUser newUser = ConvertUtils.userDTO2AdUser(userDTO);
+            newUser.setCreateTime(searchResult.get().getCreateTime());
+            newUser.setUpdateTime(new Date());
+            return new Response<>(ConvertUtils.adUser2UserVO(userRepository.save(newUser)));
+        } catch (Exception e) {
+            log.error("ad-sponsor: UserService updateUser -> request={}-error={}", userDTO, e.getMessage());
+            return new Response<>(ResultStatus.UPDATE_USER_ERROR);
         }
-        AdUser oldUser = userRepository.findByUsername(userDTO.getUsername());
-
-        if (null == oldUser) {
-            return new Response<>((ResultStatus.USER_NOT_EXISTED));
-        }
-
-        AdUser newUser = userRepository.save(ConvertUtils.userDTO2AdUser(userDTO));
-
-        return new Response<>(ConvertUtils.adUser2UserVO(newUser));
     }
 }

@@ -48,26 +48,32 @@ public class AdPlanServiceImpl implements IAdPlanService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO) {
 
-        if (!adPlanDTO.createValidate()) {
-            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+        try {
+            if (!adPlanDTO.createValidate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
+
+            // 检查User是否存在
+            Optional<AdUser> user = userRepository.findById(adPlanDTO.getUserId());
+            if (!user.isPresent()) {
+                return new Response<>(ResultStatus.USER_NOT_EXISTED);
+            }
+
+            AdPlan oldPlan = planRepository.findByUserIdAndPlanName(adPlanDTO.getUserId(), adPlanDTO.getPlanName());
+            if (null != oldPlan) {
+                return new Response<>(ResultStatus.PLAN_EXISTED);
+            }
+
+            AdPlan newAdPlan = planRepository.save(ConvertUtils.adPlanDTO2AdPlan(adPlanDTO));
+
+            return new Response<>(ConvertUtils.adPlan2AdPlanVO(newAdPlan));
+        } catch (Exception e) {
+            log.error("ad-sponsor: ADPlanService createAdPlan -> request={}-error={}", adPlanDTO, e.getMessage());
+            return new Response<>(ResultStatus.CREATE_ADPLAN_ERROR);
         }
 
-        // 检查User是否存在
-        Optional<AdUser> user = userRepository.findById(adPlanDTO.getUserId());
-        if (!user.isPresent()) {
-            return new Response<>(ResultStatus.USER_NOT_EXISTED);
-        }
-
-        AdPlan oldPlan = planRepository.findByUserIdAndPlanName(adPlanDTO.getUserId(), adPlanDTO.getPlanName());
-        if (null != oldPlan) {
-            return new Response<>(ResultStatus.PLAN_EXISTED);
-        }
-
-        AdPlan newAdPlan = planRepository.save(ConvertUtils.adPlanDTO2AdPlan(adPlanDTO));
-
-        return new Response<>(ConvertUtils.adPlan2AdPlanVO(newAdPlan));
     }
 
     /**
@@ -98,20 +104,26 @@ public class AdPlanServiceImpl implements IAdPlanService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO) throws AdException {
+    public Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO) {
+        try {
+            if (!adPlanDTO.updateValidate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
 
-        if (!adPlanDTO.updateValidate()) {
-            return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            AdPlan oldPlan = planRepository.findByIdAndUserId(adPlanDTO.getId(), adPlanDTO.getUserId());
+            if (null == oldPlan) {
+                return new Response<>(ResultStatus.PLAN_NOT_EXISTED);
+            }
+
+            AdPlan newPlan = ConvertUtils.adPlanDTO2AdPlan(adPlanDTO);
+            newPlan.setCreateTime(oldPlan.getCreateTime());
+            newPlan.setUpdateTime(new Date());
+            return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository.save(newPlan)));
+        } catch (Exception e) {
+            log.error("ad-sponsor: ADPlanService updateAdPlan -> request={}-error={}", adPlanDTO, e.getMessage());
+            return new Response<>(ResultStatus.UPDATE_ADPLAN_ERROR);
         }
 
-        AdPlan oldPlan = planRepository.findByIdAndUserId(adPlanDTO.getId(), adPlanDTO.getUserId());
-        if (null == oldPlan) {
-            return new Response<>(ResultStatus.PLAN_NOT_EXISTED);
-        }
-
-        oldPlan = ConvertUtils.adPlanDTO2AdPlan(adPlanDTO);
-        oldPlan.setUpdateTime(new Date());
-        return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository.save(oldPlan)));
     }
 
     /**

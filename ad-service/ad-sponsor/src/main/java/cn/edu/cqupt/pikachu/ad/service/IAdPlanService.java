@@ -22,7 +22,7 @@ public interface IAdPlanService {
      * @return 广告推广计划信息
      * @throws AdException 广告系统异常
      */
-    Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO) throws AdException;
+    Response<AdPlanVO> createAdPlan(AdPlanDTO adPlanDTO);
 
     /**
      * 批量获取推广计划列表
@@ -40,7 +40,7 @@ public interface IAdPlanService {
      * @return 更新后的推广计划信息
      * @throws AdException 广告系统异常
      */
-    Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO) throws AdException;
+    Response<AdPlanVO> updateAdPlan(AdPlanDTO adPlanDTO);
 
     /**
      * 删除推广计划

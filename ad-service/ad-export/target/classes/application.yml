@@ -1,0 +1,28 @@
+# Spring相关配置
+spring:
+  application:
+    name: ad-export
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/pikachu?autoRecnnect=true&useSSL=false
+    username: root
+    password: root
+    tomcat:
+      # 数据库连接池最大连接数
+      max-active: 4
+      # 最小空闲连接数
+      min-idle: 2
+      # 初始化连接数
+      initial-size: 2
+
+# 注册到eureka上
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -1,6 +1,8 @@
 package cn.edu.cqupt.pikachu.ad.utils;
 
 import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
+import cn.edu.cqupt.pikachu.ad.constants.enums.UserStatusEnums;
+import cn.edu.cqupt.pikachu.ad.constants.enums.ValueEnums;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanDTO;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdUnitDTO;
@@ -33,7 +35,12 @@ public class ConvertUtils {
      * @throws AdException Ad自定义异常
      */
     public static AdUser userDTO2AdUser(UserDTO userDTO) throws AdException {
-        return new AdUser(userDTO.getUsername(), CommonUtils.md5Encrypt(userDTO.getUsername()));
+        return new AdUser(userDTO.getUserId(),
+                userDTO.getUsername(),
+                userDTO.getAge(),
+                CommonUtils.getByDesc(ValueEnums.class, userDTO.getGender()),
+                CommonUtils.getByDesc(UserStatusEnums.class, userDTO.getStatus()),
+                CommonUtils.md5Encrypt(userDTO.getUsername()));
     }
 
     /**
@@ -46,9 +53,13 @@ public class ConvertUtils {
         UserVO userVO = new UserVO();
         userVO.setUserId(adUser.getId());
         userVO.setUsername(adUser.getUsername());
+        userVO.setAge(ValueEnums.UNKNOWN.getCode().equals(adUser.getAge()) ?
+                ValueEnums.UNKNOWN.getDesc() : String.valueOf(adUser.getAge()));
+        userVO.setGender(CommonUtils.getByCode(ValueEnums.class, adUser.getGender()));
         userVO.setToken(adUser.getToken());
-        userVO.setCreateTime(adUser.getCreateTime());
-        userVO.setUpdateTime(adUser.getUpdateTime());
+        userVO.setStatus(CommonUtils.getByCode(UserStatusEnums.class, adUser.getUserStatus()));
+        userVO.setCreateTime(CommonUtils.parseDate2String(adUser.getCreateTime()));
+        userVO.setUpdateTime(CommonUtils.parseDate2String(adUser.getUpdateTime()));
         return userVO;
     }
 
@@ -60,7 +71,8 @@ public class ConvertUtils {
      * @throws AdException 广告系统异常
      */
     public static AdPlan adPlanDTO2AdPlan(AdPlanDTO adPlanDTO) throws AdException {
-        return new AdPlan(adPlanDTO.getUserId(),
+        return new AdPlan(adPlanDTO.getId(),
+                adPlanDTO.getUserId(),
                 adPlanDTO.getPlanName(),
                 CommonUtils.parseString2Date(adPlanDTO.getStartDate()),
                 CommonUtils.parseString2Date(adPlanDTO.getEndDate()));
@@ -73,8 +85,13 @@ public class ConvertUtils {
      * @return AdPlan展示数据
      */
     public static AdPlanVO adPlan2AdPlanVO(AdPlan adPlan) {
-        return new AdPlanVO(adPlan.getId(), adPlan.getPlanName(), adPlan.getPlanStatus(), adPlan.getStartDate(),
-                adPlan.getEndDate(), adPlan.getCreateTime(), adPlan.getUpdateTime());
+        return new AdPlanVO(adPlan.getId(),
+                adPlan.getPlanName(),
+                adPlan.getPlanStatus(),
+                CommonUtils.parseDate2String(adPlan.getStartDate()),
+                CommonUtils.parseDate2String(adPlan.getEndDate()),
+                CommonUtils.parseDate2String(adPlan.getCreateTime()),
+                CommonUtils.parseDate2String(adPlan.getUpdateTime()));
     }
 
     /**
@@ -86,8 +103,13 @@ public class ConvertUtils {
     public static List<AdPlanVO> adPlan2AdPlanVO(List<AdPlan> adPlans) {
 
         return adPlans.stream().map(adPlan ->
-                new AdPlanVO(adPlan.getId(), adPlan.getPlanName(), adPlan.getPlanStatus(), adPlan.getStartDate(),
-                        adPlan.getEndDate(), adPlan.getCreateTime(), adPlan.getUpdateTime()))
+                new AdPlanVO(adPlan.getId(),
+                        adPlan.getPlanName(),
+                        adPlan.getPlanStatus(),
+                        CommonUtils.parseDate2String(adPlan.getStartDate()),
+                        CommonUtils.parseDate2String(adPlan.getEndDate()),
+                        CommonUtils.parseDate2String(adPlan.getCreateTime()),
+                        CommonUtils.parseDate2String(adPlan.getUpdateTime())))
                 .collect(Collectors.toList());
     }
 

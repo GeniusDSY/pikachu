@@ -19,7 +19,7 @@ public interface IUserService {
      * @return 用户展示信息
      * @throws AdException 自定义异常捕获
      */
-    Response<UserVO> createUser(UserDTO userDTO) throws AdException;
+    Response<UserVO> createUser(UserDTO userDTO);
 
     /**
      * 更新用户资料
@@ -28,6 +28,6 @@ public interface IUserService {
      * @return 用户展示信息
      * @throws AdException 自定义异常捕获
      */
-    Response<UserVO> updateUser(UserDTO userDTO) throws AdException;
+    Response<UserVO> updateUser(UserDTO userDTO);
 
 }

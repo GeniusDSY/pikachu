@@ -48,7 +48,7 @@ public class UserController {
      * @throws AdException 广告系统异常
      */
     @PostMapping("update")
-    public Response<UserVO> updateUser(UserDTO userDTO) throws AdException {
+    public Response<UserVO> updateUser(@RequestBody UserDTO userDTO) throws AdException {
         log.info("ad-sponsor: UserController#updateUser userDTO -> {}", JSON.toJSONString(userDTO));
         return userService.updateUser(userDTO);
     }

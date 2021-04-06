@@ -27,6 +27,21 @@ public class UserVO {
     private String username;
 
     /**
+     * 性别
+     */
+    private String gender;
+
+    /**
+     * 年龄
+     */
+    private String age;
+
+    /**
+     * 状态
+     */
+    private String status;
+
+    /**
      * 用户Token
      */
     private String token;
@@ -34,11 +49,11 @@ public class UserVO {
     /**
      * 用户账户创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 用户账户更新时间
      */
-    private Date updateTime;
+    private String updateTime;
 
 }

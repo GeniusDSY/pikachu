@@ -35,20 +35,20 @@ public class AdPlanVO {
     /**
      * 推广计划开始时间
      */
-    private Date startDate;
+    private String startDate;
 
     /**
      * 推广计划结束时间
      */
-    private Date endDate;
+    private String endDate;
 
     /**
      * 推广计划创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 推广计划更新时间
      */
-    private Date updateTime;
+    private String updateTime;
 }

@@ -50,6 +50,11 @@ public class CreativeObject {
     private Integer auditStatus;
 
     /**
+     * 广告具体内容
+     */
+    private String adContents;
+
+    /**
      * 广告地址
      */
     private String adUrl;
@@ -87,6 +92,10 @@ public class CreativeObject {
 
         if (null != newObject.getAuditStatus()) {
             this.auditStatus = newObject.getAuditStatus();
+        }
+
+        if (null != newObject.getAdContents()) {
+            this.adContents = newObject.getAdContents();
         }
 
         if (null != newObject.getAdUrl()) {

@@ -85,7 +85,7 @@ public class AdLevelDataHandler {
         AdUnitObject unitObject = ConvertUtils.adUnitTable2AdUnitObject(unitTable, adPlanObject);
         handleBinLogEvent(
                 DataTable.of(AdUnitIndex.class),
-                unitObject.getPlanId(),
+                unitObject.getUnitId(),
                 unitObject,
                 type
         );

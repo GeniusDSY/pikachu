@@ -36,5 +36,6 @@ public class AdUnitConstants {
          * 贴片后端
          */
         public static final int TIEPIAN_POST = 16;
+
     }
 }

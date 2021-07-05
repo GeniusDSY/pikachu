@@ -27,6 +27,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author :DengSiYuan
@@ -101,7 +102,7 @@ public class SearchServiceImpl implements ISearchService {
             List<Long> adIds = DataTable.of(CreativeUnitIndex.class).selectAds(unitObjects);
             List<CreativeObject> creatives = DataTable.of(CreativeIndex.class).fetch(adIds);
 
-            // 通过AdSlot实现对CreativeObject 的过滤
+            // 通过AdSlot实现对CreativeObject 的过滤 width 1000, 80 height: 120, 80
             filterCreativeByAdSlot(creatives, adSlot.getWidth(), adSlot.getHeight(), adSlot.getType());
 
             adSlot2Ads.put(adSlot.getAdSlotCode(), buildCreativeResponse(creatives));
@@ -257,9 +258,6 @@ public class SearchServiceImpl implements ISearchService {
             return Collections.emptyList();
         }
 
-        // TODO 随机获取的创意对象
-        CreativeObject randomObject = creatives.get(Math.abs(new Random().nextInt() % creatives.size()));
-
-        return Collections.singletonList(SearchResponse.convert(randomObject));
+        return creatives.stream().map(SearchResponse::convert).collect(Collectors.toList());
     }
 }

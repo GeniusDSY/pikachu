@@ -1,5 +1,6 @@
 package cn.edu.cqupt.pikachu.ad.index.adunit;
 
+import cn.edu.cqupt.pikachu.ad.constants.enums.PositionTypeEnums;
 import cn.edu.cqupt.pikachu.ad.index.adplan.AdPlanObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -76,7 +77,7 @@ public class AdUnitObject {
      * @return true/false
      */
     private static boolean isKaiPing(int positionType) {
-        return (positionType & AdUnitConstants.POSITION_TYPE.KAIPING) > 0;
+        return (positionType & PositionTypeEnums.KAI_PING.getCode()) > 0;
     }
 
     /**
@@ -86,7 +87,7 @@ public class AdUnitObject {
      * @return true/false
      */
     private static boolean isTiePian(int positionType) {
-        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN) > 0;
+        return (positionType & PositionTypeEnums.TIE_PIAN.getCode()) > 0;
     }
 
     /**
@@ -96,7 +97,7 @@ public class AdUnitObject {
      * @return true/false
      */
     private static boolean isTiePianMiddle(int positionType) {
-        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_MIDDLE) > 0;
+        return (positionType & PositionTypeEnums.TIE_PIAN_MIDDLE.getCode()) > 0;
     }
 
     /**
@@ -106,7 +107,7 @@ public class AdUnitObject {
      * @return true/false
      */
     private static boolean isTiePianPause(int positionType) {
-        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_PAUSE) > 0;
+        return (positionType & PositionTypeEnums.TIE_PIAN_PAUSE.getCode()) > 0;
     }
 
     /**
@@ -116,7 +117,7 @@ public class AdUnitObject {
      * @return true/false
      */
     private static boolean isTiePianPost(int positionType) {
-        return (positionType & AdUnitConstants.POSITION_TYPE.TIEPIAN_POST) > 0;
+        return (positionType & PositionTypeEnums.TIE_PIAN_POST.getCode()) > 0;
     }
 
     /**

@@ -35,6 +35,7 @@ public interface IndexAware<K, V> {
      * 删除索引
      *
      * @param key 索引的键
+     * @param value  索引的值
      */
     void delete(K key, V value);
 

@@ -46,6 +46,7 @@ public class ConvertUtils {
                 creativeTable.getHeight(),
                 creativeTable.getWidth(),
                 creativeTable.getAuditStatus(),
+                creativeTable.getAdContents(),
                 creativeTable.getAdUrl());
     }
 

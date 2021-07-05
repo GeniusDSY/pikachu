@@ -1,0 +1,71 @@
+# 服务相关配置
+server:
+  port: 8002
+  servlet:
+    context-path: /ad-search
+
+# Spring相关配置
+spring:
+  application:
+    name: ad-search
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/pikachu?autoRecnnect=true&useSSL=false
+    username: root
+    password: root
+    tomcat:
+      # 数据库连接池最大连接数
+      max-active: 4
+      # 最小空闲连接数
+      min-idle: 2
+      # 初始化连接数
+      initial-size: 2
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    listener:
+      concurrency: 4
+
+# 注册到eureka上
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      clustor: SEARCH
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+
+# Fegin 配置
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+adconf:
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    username: root
+    password: root
+    binlogName: binlog.000001
+    position: -1
+  kafka:
+    topic: ad-search-mysql-data

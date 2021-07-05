@@ -146,7 +146,7 @@ public class DumpDataService {
         List<AdCreativeTable> creativeTables = new ArrayList<>();
         creatives.forEach(c -> creativeTables.add(
                 new AdCreativeTable(c.getId(), c.getName(), c.getType(), c.getMaterialType(),
-                        c.getHeight(), c.getWidth(), c.getAuditStatus(), c.getUrl())
+                        c.getHeight(), c.getWidth(), c.getAuditStatus(), c.getAdContents(), c.getUrl())
         ));
 
         Path path = Paths.get(fileName);

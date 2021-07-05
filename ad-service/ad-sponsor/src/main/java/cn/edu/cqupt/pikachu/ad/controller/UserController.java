@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author :DengSiYuan
@@ -32,10 +33,9 @@ public class UserController {
      *
      * @param userDTO 用户传入数据
      * @return 用户展示数据
-     * @throws AdException 广告系统异常
      */
     @PostMapping("create")
-    public Response<UserVO> createUser(@RequestBody UserDTO userDTO) throws AdException {
+    public Response<UserVO> createUser(@RequestBody UserDTO userDTO) {
         log.info("ad-sponsor: UserController#createUser userDTO -> {}", JSON.toJSONString(userDTO));
         return userService.createUser(userDTO);
     }
@@ -45,12 +45,29 @@ public class UserController {
      *
      * @param userDTO 用户传入数据
      * @return 用户展示数据
-     * @throws AdException 广告系统异常
      */
     @PostMapping("update")
-    public Response<UserVO> updateUser(@RequestBody UserDTO userDTO) throws AdException {
+    public Response<UserVO> updateUser(@RequestBody UserDTO userDTO) {
         log.info("ad-sponsor: UserController#updateUser userDTO -> {}", JSON.toJSONString(userDTO));
         return userService.updateUser(userDTO);
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param userDTO 用户传入数据
+     * @return 用户展示数据
+     */
+    @PostMapping("login")
+    public Response<UserVO> login(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        log.info("ad-sponsor: UserController login userDTO -> {}", JSON.toJSONString(userDTO));
+        return userService.login(userDTO, request);
+    }
+
+    @PostMapping("modifyPassword")
+    public Response<Boolean> modifyPassword(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        log.info("ad-sponsor: UserController modifyPassword userDTO -> {}", JSON.toJSONString(userDTO));
+        return userService.modifyPassword(userDTO, request);
     }
 
 }

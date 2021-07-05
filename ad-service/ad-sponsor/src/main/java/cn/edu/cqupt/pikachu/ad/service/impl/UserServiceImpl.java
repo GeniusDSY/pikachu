@@ -8,12 +8,14 @@ import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
 import cn.edu.cqupt.pikachu.ad.model.vo.UserVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.IUserService;
+import cn.edu.cqupt.pikachu.ad.utils.CommonUtils;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Optional;
 
@@ -68,7 +70,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Response<UserVO> updateUser(UserDTO userDTO){
+    public Response<UserVO> updateUser(UserDTO userDTO) {
         try {
             if (userDTO.validate()) {
                 return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
@@ -87,5 +89,46 @@ public class UserServiceImpl implements IUserService {
             log.error("ad-sponsor: UserService updateUser -> request={}-error={}", userDTO, e.getMessage());
             return new Response<>(ResultStatus.UPDATE_USER_ERROR);
         }
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param userDTO 用户信息
+     * @param request
+     * @return 用户展示信息
+     */
+    @Override
+    public Response<UserVO> login(UserDTO userDTO, HttpServletRequest request) {
+        try {
+            if (userDTO.validate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
+            // 判断账号密码是否匹配
+            AdUser user = userRepository.findByUsername(userDTO.getUsername());
+
+            if (user.getPassword().equals(CommonUtils.md5Encrypt(userDTO.getPassword()))) {
+                request.getSession().setAttribute("userToken", user.getToken());
+                return new Response<>(ConvertUtils.adUser2UserVO(user));
+            }
+            return new Response<>(ResultStatus.WRONG_PASSWORD);
+        } catch (AdException e) {
+            log.error("ad-sponsor: UserService login -> request={}-error={}", userDTO, e.getMessage());
+            return new Response<>(ResultStatus.LOGIN_ERROR);
+        }
+    }
+
+    /**
+     * 用户修改密码
+     *
+     * @param userDTO 用户信息
+     * @param request 请求信息
+     * @return 是否修改成功
+     */
+    @Override
+    public Response<Boolean> modifyPassword(UserDTO userDTO, HttpServletRequest request) {
+
+        //if ()
+        return null;
     }
 }

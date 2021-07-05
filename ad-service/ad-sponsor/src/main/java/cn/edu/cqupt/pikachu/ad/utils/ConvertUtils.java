@@ -1,8 +1,6 @@
 package cn.edu.cqupt.pikachu.ad.utils;
 
-import cn.edu.cqupt.pikachu.ad.constants.enums.CommonStatus;
-import cn.edu.cqupt.pikachu.ad.constants.enums.UserStatusEnums;
-import cn.edu.cqupt.pikachu.ad.constants.enums.ValueEnums;
+import cn.edu.cqupt.pikachu.ad.constants.enums.*;
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdPlanDTO;
 import cn.edu.cqupt.pikachu.ad.model.dto.AdUnitDTO;
@@ -12,12 +10,12 @@ import cn.edu.cqupt.pikachu.ad.model.entity.AdPlan;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
 import cn.edu.cqupt.pikachu.ad.model.entity.Creative;
-import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
-import cn.edu.cqupt.pikachu.ad.model.vo.AdUnitVO;
-import cn.edu.cqupt.pikachu.ad.model.vo.UserVO;
+import cn.edu.cqupt.pikachu.ad.model.vo.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +35,7 @@ public class ConvertUtils {
     public static AdUser userDTO2AdUser(UserDTO userDTO) throws AdException {
         return new AdUser(userDTO.getUserId(),
                 userDTO.getUsername(),
+                CommonUtils.md5Encrypt(userDTO.getPassword()),
                 userDTO.getAge(),
                 CommonUtils.getByDesc(ValueEnums.class, userDTO.getGender()),
                 CommonUtils.getByDesc(UserStatusEnums.class, userDTO.getStatus()),
@@ -122,8 +121,11 @@ public class ConvertUtils {
      */
     public static AdUnit adUnitDTO2AdUnit(AdUnitDTO adUnitDTO) {
 
-        return new AdUnit(adUnitDTO.getPlanId(), adUnitDTO.getUnitName(),
-                adUnitDTO.getPositionType(), adUnitDTO.getBudget());
+        return new AdUnit(adUnitDTO.getId(),
+                adUnitDTO.getPlanId(),
+                adUnitDTO.getUnitName(),
+                adUnitDTO.getPositionType(),
+                adUnitDTO.getBudget());
     }
 
     /**
@@ -145,6 +147,7 @@ public class ConvertUtils {
      */
     public static Creative creativeDTO2Creative(CreativeDTO creativeDTO) {
         Creative creative = new Creative();
+        creative.setId(creative.getId());
         creative.setName(creativeDTO.getName());
         creative.setType(creativeDTO.getType());
         creative.setMaterialType(creativeDTO.getMaterialType());
@@ -152,12 +155,68 @@ public class ConvertUtils {
         creative.setWidth(creativeDTO.getWidth());
         creative.setSize(creativeDTO.getSize());
         creative.setDuration(creativeDTO.getDuration());
-        creative.setAuditStatus(CommonStatus.VALID.getStatus());
+        creative.setAuditStatus(creativeDTO.getAuditStatus());
         creative.setUserId(creativeDTO.getUserId());
+        creative.setAdContents(creativeDTO.getAdContents());
         creative.setUrl(creativeDTO.getUrl());
         creative.setCreateTime(new Date());
         creative.setUpdateTime(creative.getCreateTime());
         return creative;
     }
 
+    /**
+     * 广告推广单元转换成用户广告推广单元
+     *
+     * @param adPlans 广告推广计划
+     * @param adUnits 广告推广单元
+     * @return 用户广告推广单元列表
+     */
+    public static List<UserAdUnitVO> adUnit2UserAdUnitVO(List<AdPlan> adPlans, List<AdUnit> adUnits) {
+
+        List<UserAdUnitVO> userAdUnitVOS = new ArrayList<>();
+        for (AdUnit adUnit : adUnits) {
+            UserAdUnitVO userAdUnitVO = new UserAdUnitVO();
+            userAdUnitVO.setId(adUnit.getId());
+            userAdUnitVO.setUnitName(adUnit.getUnitName());
+            Optional optional = adPlans.stream().filter(adPlan -> adPlan.getId().equals(adUnit.getPlanId())).findFirst();
+            if (optional.isPresent()) {
+                AdPlan adPlan = (AdPlan) optional.get();
+                userAdUnitVO.setPlanMsg(adPlan.getId() + "." + adPlan.getPlanName());
+            } else {
+                userAdUnitVO.setPlanMsg("未知广告推广计划");
+            }
+            userAdUnitVO.setBudget(adUnit.getBudget());
+            userAdUnitVO.setUnitStatus(adUnit.getUnitStatus());
+            userAdUnitVO.setPositionType(CommonUtils.getByCode(PositionTypeEnums.class, adUnit.getPositionType()));
+            userAdUnitVO.setCreateTime(CommonUtils.parseDate2String(adUnit.getCreateTime()));
+            userAdUnitVO.setUpdateTime(CommonUtils.parseDate2String(adUnit.getUpdateTime()));
+            userAdUnitVOS.add(userAdUnitVO);
+        }
+        return userAdUnitVOS;
+    }
+
+    /**
+     * Creative to CreativeVO
+     *
+     * @param creative 创意实体数据
+     * @return 创意展示数据
+     */
+    public static CreativeVO creative2CreativeVO(Creative creative) {
+        CreativeVO creativeVO = new CreativeVO();
+        creativeVO.setId(creative.getId());
+        creativeVO.setName(creative.getName());
+        creativeVO.setType(CommonUtils.getByCode(CreativeType.class, creative.getType()));
+        creativeVO.setMaterialType(CommonUtils.getByCode(CreativeMaterialType.class, creative.getMaterialType()));
+        creativeVO.setHeight(creative.getHeight());
+        creativeVO.setWidth(creative.getWidth());
+        creativeVO.setSize(creative.getSize());
+        creativeVO.setDuration(creative.getDuration());
+        creativeVO.setAuditStatus(creative.getAuditStatus());
+        creativeVO.setUserId(creative.getUserId());
+        creativeVO.setAdContents(creative.getAdContents());
+        creativeVO.setUrl(creative.getUrl());
+        creativeVO.setCreateTime(CommonUtils.parseDate2String(creative.getCreateTime()));
+        creativeVO.setUpdateTime(CommonUtils.parseDate2String(creative.getUpdateTime()));
+        return creativeVO;
+    }
 }

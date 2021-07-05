@@ -50,4 +50,10 @@ public class AdPlanController {
         adPlanService.deleteAdPlan(adPlanDTO);
     }
 
+    @GetMapping("getAdPlanMsg")
+    public Response<List<String>> getAllAdPlanMsg(Long userId) {
+        log.info("ad-sponsor: AdPlanController getAllAdPlanMsg -> {}", userId);
+        return adPlanService.getAllAdPlanMsg(userId);
+    }
+
 }

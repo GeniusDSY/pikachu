@@ -1,17 +1,16 @@
 package cn.edu.cqupt.pikachu.ad.controller;
 
 import cn.edu.cqupt.pikachu.ad.model.dto.*;
+import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
 import cn.edu.cqupt.pikachu.ad.model.vo.*;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.IAdUnitService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author :DengSiYuan
@@ -30,6 +29,18 @@ public class AdUnitController {
     public Response<AdUnitVO> createUnit(@RequestBody AdUnitDTO adUnitDTO) {
         log.info("ad-sponsor: AdUnitController createUnit -> {}", JSON.toJSONString(adUnitDTO));
         return adUnitService.createUnit(adUnitDTO);
+    }
+
+    @PutMapping("update/unit")
+    public Response<AdUnitVO> updateUnit(@RequestBody AdUnitDTO adUnitDTO) {
+        log.info("ad-sponsor: AdUnitController updateUnit -> {}", JSON.toJSONString(adUnitDTO));
+        return adUnitService.updateUnit(adUnitDTO);
+    }
+
+    @GetMapping("get/units")
+    public Response<List<UserAdUnitVO>> getAllUnits(Long userId) {
+        log.info("ad-sponsor: AdUnitController getAllUnits -> {}", userId);
+        return adUnitService.getAllUnits(userId);
     }
 
     @PostMapping("create/unitKeyword")
@@ -54,6 +65,12 @@ public class AdUnitController {
     public Response<CreativeUnitVO> createCreativeUnit(@RequestBody CreativeUnitDTO creativeUnitDTO) {
         log.info("ad-sponsor: AdUnitController createCreativeUnit -> {}", JSON.toJSONString(creativeUnitDTO));
         return adUnitService.createCreativeUnit(creativeUnitDTO);
+    }
+
+    @GetMapping("getAdUnitMsg")
+    public Response<List<String>> getAllAdUnitMsg(Long userId) {
+        log.info("ad-sponsor: AdUnitController getAllAdUnitMsg -> {}", userId);
+        return adUnitService.getAllAdUnitMsg(userId);
     }
 
 }

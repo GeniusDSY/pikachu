@@ -221,6 +221,69 @@ public class AdUnitServiceImpl implements IAdUnitService {
     }
 
     /**
+     * 获取所有广告单元
+     *
+     * @param userId 用户Id
+     * @return 广告单元
+     */
+    @Override
+    public Response<List<UserAdUnitVO>> getAllUnits(Long userId) {
+
+        List<AdPlan> adPlans = planRepository.findByUserId(userId);
+        List<Long> adPlanIds = adPlans.stream().map(AdPlan::getId).collect(Collectors.toList());
+        List<AdUnit> adUnits = unitRepository.findAllByPlanIds(adPlanIds);
+        return new Response<>(ConvertUtils.adUnit2UserAdUnitVO(adPlans, adUnits));
+    }
+
+    /**
+     * 更新广告单元
+     *
+     * @param adUnitDTO 广告单元
+     * @return 更新后的信息
+     */
+    @Override
+    public Response<AdUnitVO> updateUnit(AdUnitDTO adUnitDTO) {
+        try {
+            if (!adUnitDTO.updateValidate()) {
+                return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+            }
+
+            Optional selectResult = unitRepository.findById(adUnitDTO.getId());
+
+            if (!selectResult.isPresent()) {
+                return new Response<>(ResultStatus.UNIT_NOT_EXIST);
+            }
+            AdUnit oldUnit = (AdUnit) selectResult.get();
+
+            AdUnit adUnit = ConvertUtils.adUnitDTO2AdUnit(adUnitDTO);
+            adUnit.setCreateTime(oldUnit.getCreateTime());
+            adUnit.setUpdateTime(new Date());
+            adUnit.setUnitStatus(adUnitDTO.getUnitStatus());
+            return new Response<>(ConvertUtils.adUnit2AdUnitVO(unitRepository.save(adUnit)));
+        } catch (Exception e) {
+            log.error("ad-sponsor: AdUnitService updateUnit -> request={}-error={}", adUnitDTO, e.getMessage());
+            return new Response<>(ResultStatus.UPDATE_ADPLAN_ERROR);
+        }
+    }
+
+    /**
+     * 获取广告推广单元的基本信息（id + name）
+     *
+     * @param userId 用户Id
+     * @return 用户的所有推广单元的基本信息
+     */
+    @Override
+    public Response<List<String>> getAllAdUnitMsg(Long userId) {
+        List<AdPlan> adPlans = planRepository.findByUserId(userId);
+        List<Long> adPlanIds = adPlans.stream().map(AdPlan::getId).collect(Collectors.toList());
+        List<AdUnit> adUnits = unitRepository.findAllByPlanIds(adPlanIds);
+        List<String> allAdPlanMsg = adUnits.stream()
+                .map(adUnit -> adUnit.getId() + "." + adUnit.getUnitName())
+                .collect(Collectors.toList());
+        return new Response<>(allAdPlanMsg);
+    }
+
+    /**
      * 判断推广单元是否存在
      *
      * @param unitIds 推广单元Id列表

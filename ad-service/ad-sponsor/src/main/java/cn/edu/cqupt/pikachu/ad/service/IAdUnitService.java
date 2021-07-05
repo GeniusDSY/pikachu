@@ -2,8 +2,11 @@ package cn.edu.cqupt.pikachu.ad.service;
 
 import cn.edu.cqupt.pikachu.ad.exception.AdException;
 import cn.edu.cqupt.pikachu.ad.model.dto.*;
+import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
 import cn.edu.cqupt.pikachu.ad.model.vo.*;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
+
+import java.util.List;
 
 /**
  * @author :DengSiYuan
@@ -57,4 +60,27 @@ public interface IAdUnitService {
      */
     Response<CreativeUnitVO> createCreativeUnit(CreativeUnitDTO creativeUnitDTO);
 
+    /**
+     * 获取所有广告单元
+     *
+     * @param userId 用户Id
+     * @return 广告单元
+     */
+    Response<List<UserAdUnitVO>> getAllUnits(Long userId);
+
+    /**
+     * 更新广告单元
+     *
+     * @param adUnitDTO 广告单元
+     * @return 更新后的信息
+     */
+    Response<AdUnitVO> updateUnit(AdUnitDTO adUnitDTO);
+
+    /**
+     * 获取广告推广单元的基本信息（id + name）
+     *
+     * @param userId
+     * @return
+     */
+    Response<List<String>> getAllAdUnitMsg(Long userId);
 }

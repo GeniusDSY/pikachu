@@ -50,4 +50,11 @@ public interface IAdPlanService {
      */
     void deleteAdPlan(AdPlanDTO adPlanDTO) throws AdException;
 
+    /**
+     * 获取广告计划的基本信息（id + name）
+     *
+     * @param userId
+     * @return
+     */
+    Response<List<String>> getAllAdPlanMsg(Long userId);
 }

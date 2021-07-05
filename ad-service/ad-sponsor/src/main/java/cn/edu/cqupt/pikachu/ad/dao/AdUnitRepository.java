@@ -1,7 +1,9 @@
 package cn.edu.cqupt.pikachu.ad.dao;
 
+import cn.edu.cqupt.pikachu.ad.model.entity.AdPlan;
 import cn.edu.cqupt.pikachu.ad.model.entity.AdUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -28,5 +30,14 @@ public interface AdUnitRepository extends JpaRepository<AdUnit, Long> {
      * @return 广告推广单元列表
      */
     List<AdUnit> findAllByUnitStatus(Integer unitStatus);
+
+    /**
+     * 通过推广计划Id查询所有的推广单元
+     *
+     * @param planIds 推广计划Id
+     * @return 广告推广单元列表
+     */
+    @Query(value = "select * from ad_unit where plan_id in (?1)", nativeQuery = true)
+    List<AdUnit> findAllByPlanIds(List<Long> planIds);
 
 }

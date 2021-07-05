@@ -12,17 +12,21 @@ import cn.edu.cqupt.pikachu.ad.model.entity.AdUser;
 import cn.edu.cqupt.pikachu.ad.model.vo.AdPlanVO;
 import cn.edu.cqupt.pikachu.ad.model.vo.response.Response;
 import cn.edu.cqupt.pikachu.ad.service.IAdPlanService;
+import cn.edu.cqupt.pikachu.ad.utils.CommonUtils;
 import cn.edu.cqupt.pikachu.ad.utils.ConvertUtils;
 import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author :DengSiYuan
@@ -91,8 +95,27 @@ public class AdPlanServiceImpl implements IAdPlanService {
             return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
         }
 
-        return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository
-                .findAllByIdInAndUserId(adPlanGetDTO.getIds(), adPlanGetDTO.getUserId())));
+        // 全量查询
+        if (CollectionUtils.isEmpty(adPlanGetDTO.getIds()) && StringUtils.isEmpty(adPlanGetDTO.getName())) {
+            return new Response<>(ConvertUtils.adPlan2AdPlanVO(
+                    planRepository.findByUserId(adPlanGetDTO.getUserId())));
+        }
+
+        // 搜索框查询
+        if (CollectionUtils.isEmpty(adPlanGetDTO.getIds())) {
+            return new Response<>(ConvertUtils.adPlan2AdPlanVO(
+                    planRepository.findAllByIdInAndUserId(adPlanGetDTO.getIds(), adPlanGetDTO.getUserId())));
+        }
+
+        // 名称模糊查询
+        if (StringUtils.isEmpty(adPlanGetDTO.getName())) {
+            return new Response<>(ConvertUtils.adPlan2AdPlanVO(
+                    planRepository.findByPlanNameAndUserId(adPlanGetDTO.getUserId(),
+                            "%" + adPlanGetDTO.getName() + "%")));
+        }
+
+        return new Response<>(ResultStatus.REQUEST_PARAM_ERROR);
+
     }
 
     /**
@@ -118,6 +141,7 @@ public class AdPlanServiceImpl implements IAdPlanService {
             AdPlan newPlan = ConvertUtils.adPlanDTO2AdPlan(adPlanDTO);
             newPlan.setCreateTime(oldPlan.getCreateTime());
             newPlan.setUpdateTime(new Date());
+            newPlan.setPlanStatus(adPlanDTO.getPlanStatus());
             return new Response<>(ConvertUtils.adPlan2AdPlanVO(planRepository.save(newPlan)));
         } catch (Exception e) {
             log.error("ad-sponsor: ADPlanService updateAdPlan -> request={}-error={}", adPlanDTO, e.getMessage());
@@ -149,6 +173,21 @@ public class AdPlanServiceImpl implements IAdPlanService {
         oldPlan.setPlanStatus(CommonStatus.INVALID.getStatus());
         oldPlan.setUpdateTime(new Date());
         planRepository.save(oldPlan);
+    }
+
+    /**
+     * 获取广告计划的基本信息（id + name）
+     *
+     * @param userId 用户Id
+     * @return 广告计划基本信息列表（id + name）
+     */
+    @Override
+    public Response<List<String>> getAllAdPlanMsg(Long userId) {
+        List<AdPlan> adPlans = planRepository.findByUserId(userId);
+        List<String> allAdPlanMsg = adPlans.stream()
+                                            .map(adPlan -> adPlan.getId() + "." + adPlan.getPlanName())
+                                            .collect(Collectors.toList());
+        return new Response<>(allAdPlanMsg);
     }
 
     /**

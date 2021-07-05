@@ -40,11 +40,22 @@ public interface AdPlanRepository extends JpaRepository<AdPlan, Long> {
     AdPlan findByUserIdAndPlanName(Long userId, String planName);
 
     /**
+     * 通过用户Id计划名称摸出查询
+     *
+     * @param userId 用户Id
+     * @param planName 模糊计划名称
+     * @return 广告计划列表
+     */
+    List<AdPlan> findByPlanNameAndUserId(Long userId, String planName);
+
+    /**
      * 通过广告计划状态查询广告计划
      *
      * @param status 广告状态
      * @return 广告计划列表
      */
     List<AdPlan> findAllByPlanStatus(Integer status);
+
+    List<AdPlan> findByUserId(Long userId);
 
 }

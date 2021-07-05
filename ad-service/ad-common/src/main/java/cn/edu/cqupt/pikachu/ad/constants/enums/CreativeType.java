@@ -1,5 +1,6 @@
 package cn.edu.cqupt.pikachu.ad.constants.enums;
 
+import cn.edu.cqupt.pikachu.ad.constants.CodeEnum;
 import lombok.Getter;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Getter;
  * @desc : 创意类型
  */
 @Getter
-public enum CreativeType {
+public enum CreativeType implements CodeEnum {
 
     /**
      * 图片类型
@@ -29,15 +30,15 @@ public enum CreativeType {
     /**
      * 类型
      */
-    private Integer type;
+    private Integer code;
 
     /**
      * 描述
      */
     private String desc;
 
-    CreativeType(Integer type, String desc) {
-        this.type = type;
+    CreativeType(Integer code, String desc) {
+        this.code = code;
         this.desc = desc;
     }
 

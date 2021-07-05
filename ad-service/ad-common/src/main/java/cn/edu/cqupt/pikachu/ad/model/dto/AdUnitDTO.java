@@ -16,6 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 public class AdUnitDTO {
 
     /**
+     * 广告单元Id
+     */
+    private Long id;
+
+    /**
      * 推广计划Id
      */
     private Long planId;
@@ -36,6 +41,11 @@ public class AdUnitDTO {
     private Long budget;
 
     /**
+     * 广告单元状态
+     */
+    private Integer unitStatus;
+
+    /**
      * 创建广告推广单元的有效性验证
      *
      * @return 有效与否
@@ -43,5 +53,9 @@ public class AdUnitDTO {
     public boolean createValidate() {
         return null != planId && StringUtils.isNotEmpty(unitName)
                 && null != positionType && null != budget;
+    }
+
+    public boolean updateValidate() {
+        return null != id && StringUtils.isNotEmpty(unitName) && null != positionType && null != budget;
     }
 }

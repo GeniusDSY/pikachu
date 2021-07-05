@@ -90,6 +90,10 @@ public class Creative {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Basic
+    @Column(name = "ad_contents", nullable = false)
+    private String adContents;
+
     /**
      * 物料地址信息
      */
@@ -110,5 +114,4 @@ public class Creative {
     @Basic
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
-
 }

@@ -1,5 +1,6 @@
 package cn.edu.cqupt.pikachu.ad.constants.enums;
 
+import cn.edu.cqupt.pikachu.ad.constants.CodeEnum;
 import lombok.Getter;
 
 /**
@@ -8,38 +9,38 @@ import lombok.Getter;
  * @desc : 创意物料类型
  */
 @Getter
-public enum CreativeMaterialType {
+public enum CreativeMaterialType implements CodeEnum {
 
     /**
      * 图片物料格式
      */
-    JPG(1, "jpg"),
-    BMP(2, "bmp"),
+    JPG(1, "JPG"),
+    BMP(2, "BMP"),
 
     /**
      * 视频物料格式
      */
-    MP4(3, "mp4"),
-    AVI(4, "avi"),
+    MP4(3, "MP4"),
+    AVI(4, "AVI"),
 
     /**
      * 文本物料格式
      */
-    TXT(5, "txt"),
+    TXT(5, "TXT"),
     ;
 
     /**
      * 创意物料类型
      */
-    private Integer type;
+    private Integer code;
 
     /**
      * 物料类型描述
      */
     private String desc;
 
-    CreativeMaterialType(Integer type, String desc) {
-        this.type = type;
+    CreativeMaterialType(Integer code, String desc) {
+        this.code = code;
         this.desc = desc;
     }
 }

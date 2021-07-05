@@ -27,8 +27,13 @@ public class AdPlanGetDTO {
      */
     private List<Long> ids;
 
+    /**
+     * 推广计划名称
+     */
+    private String name;
+
     public boolean validate() {
-        return  null != userId && !CollectionUtils.isEmpty(ids);
+        return  null != userId;
     }
 
 }

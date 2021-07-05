@@ -26,6 +26,11 @@ public class UserDTO {
     private String username;
 
     /**
+     * 密码
+     */
+    private String password;
+
+    /**
      * 性别
      */
     private String gender;
@@ -43,11 +48,10 @@ public class UserDTO {
     /**
      * 用户有效性检验
      *
-     * @return true/false invert
+     * @return true/false
      */
     public boolean validate() {
-        return StringUtils.isEmpty(username);
+        return StringUtils.isEmpty(username) || StringUtils.isEmpty(password);
     }
-
 
 }

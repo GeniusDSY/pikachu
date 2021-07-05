@@ -95,7 +95,16 @@ public enum ResultStatus {
      * 创建广告计划异常
      */
     CREATE_ADPLAN_ERROR("CREATE_ADPLAN_ERROR", "创建广告计划异常"),
-    ;
+
+    /**
+     * 登录密码错误
+     */
+    WRONG_PASSWORD("WRONG_PASSWORD", "密码错误"),
+
+    /**
+     * 登录异常
+     */
+    LOGIN_ERROR("LOGIN_ERROR", "登录异常");
 
     /**
      * 状态码

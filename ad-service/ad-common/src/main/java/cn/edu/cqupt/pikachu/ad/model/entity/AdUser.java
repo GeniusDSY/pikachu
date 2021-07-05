@@ -37,6 +37,10 @@ public class AdUser {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Basic
+    @Column(name = "password", nullable = false)
+    private String password;
+
     /**
      * 用户年龄
      */
@@ -79,9 +83,10 @@ public class AdUser {
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
-    public AdUser(Long userId, String username, Integer age, Integer gender, Integer userStatus, String token) {
+    public AdUser(Long userId, String username, String password, Integer age, Integer gender, Integer userStatus, String token) {
         this.id = userId;
         this.username = username;
+        this.password = password;
         this.age = (null == age ? -1 : age);
         this.gender = (null == gender ? -1 : gender);
         this.token = token;

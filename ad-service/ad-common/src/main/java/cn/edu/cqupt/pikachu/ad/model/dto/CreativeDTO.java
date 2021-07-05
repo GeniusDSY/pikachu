@@ -16,6 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 public class CreativeDTO {
 
     /**
+     * 创意Id
+     */
+    private Long id;
+
+    /**
      * 创意的名称
      */
     private String name;
@@ -56,9 +61,19 @@ public class CreativeDTO {
     private Long userId;
 
     /**
+     * 广告具体内容
+     */
+    private String adContents;
+
+    /**
      * 链接地址
      */
     private String url;
+
+    /**
+     * 审核状态
+     */
+    private Integer auditStatus;
 
     /**
      * 创建参数有效性检验
@@ -70,7 +85,6 @@ public class CreativeDTO {
                 && null != type && null != materialType
                 && null != height && null != width
                 && null != size && null != duration
-                && null != url;
+                && StringUtils.isNotEmpty(adContents) && null != url;
     }
-
 }

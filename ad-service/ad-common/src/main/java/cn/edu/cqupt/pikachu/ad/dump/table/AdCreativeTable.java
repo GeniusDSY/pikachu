@@ -50,6 +50,11 @@ public class AdCreativeTable {
     private Integer auditStatus;
 
     /**
+     * 广告具体信息
+     */
+    private String adContents;
+
+    /**
      * 广告链接地址
      */
     private String adUrl;

@@ -41,6 +41,11 @@ public class AdPlanDTO {
     private String endDate;
 
     /**
+     * 广告计划状态
+     */
+    private Integer planStatus;
+
+    /**
      * 检验创建参数有效性
      *
      * @return true/false
